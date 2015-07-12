@@ -86,7 +86,7 @@ namespace Tagger.Tests
             }
         }
 
-        public class ImplementInterface
+        public class ImplementInterfaceMethod
         {
             [Theory]
             [InlineData("this value", 123456, true)]
