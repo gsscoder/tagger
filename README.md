@@ -13,3 +13,4 @@ var sut = new Mirror(new { StringProperty = "", IntProperty = 0, LongProperty = 
 
 var instance = sut.Object;
 ```
+See this [unit test](https://github.com/gsscoder/tagger/blob/master/src/Tagger.Tests/MirrorTests.cs) for usage info.
