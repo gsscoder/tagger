@@ -1,5 +1,6 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿// Copyright 2015 Giacomo Stelluti Scala. All rights reserved. See doc/License.md in the project root for license information.
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
