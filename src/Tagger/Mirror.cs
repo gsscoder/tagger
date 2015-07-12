@@ -114,35 +114,39 @@ namespace Tagger
 
             this.interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
 
-            foreach (var prop in properties)
+            foreach(var prop in this.properties)
             {
                 var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, this.interfaces);
 
                 if (!attributes.Keys.Contains(prop.Name)) continue;
 
                 var attrInfos = attributes[prop.Name];
-                foreach (var info in attrInfos)
-                {
-                    var ctorTypes = info.CtorParameterValues.Select(v => v.GetType()).ToArray();
-                    var ctorInfo = info.AttributeType.GetConstructor(ctorTypes);
+                attrInfos.ForEach(info =>
+                    {
+                        var ctorTypes = info.CtorParameterValues.Select(v => v.GetType()).ToArray();
+                        var ctorInfo = info.AttributeType.GetConstructor(ctorTypes);
 
-                    if (!info.PropertyValues.Any())
-                    {
-                        propBuilder.SetCustomAttribute(new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues));
-                    }
-                    else
-                    {
-                        var propWithValues =
-                            from pi in info.AttributeType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                            join pv in info.PropertyValues on pi.Name equals pv.Key
-                            select new { PropInfo = pi, PropValue = pv.Value };
-                        propBuilder.SetCustomAttribute(
-                            new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues,
-                                (from p in propWithValues select p.PropInfo).ToArray(),
-                                (from v in propWithValues select v.PropValue).ToArray()));
-                    }
-                }
+                        if (!info.PropertyValues.Any())
+                        {
+                            propBuilder.SetCustomAttribute(
+                                new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues));
+                        }
+                        else
+                        {
+                            var propWithValues =
+                                from pi in info.AttributeType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                                join pv in info.PropertyValues on pi.Name equals pv.Key
+                                select new { PropInfo = pi, PropValue = pv.Value };
+                            propBuilder.SetCustomAttribute(
+                                new CustomAttributeBuilder(
+                                    ctorInfo,
+                                    info.CtorParameterValues,
+                                    (from p in propWithValues select p.PropInfo).ToArray(),
+                                    (from v in propWithValues select v.PropValue).ToArray()));
+                        }
+                    });
             }
+
             var newType = typeBuilder.CreateType();
             var instance = Activator.CreateInstance(newType);
             return instance;
