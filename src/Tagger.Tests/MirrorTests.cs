@@ -13,7 +13,7 @@ namespace Tagger.Tests
             [Theory]
             [InlineData("StringProperty", "value")]
             [InlineData("IntProperty", "another value")]
-            [InlineData("LongProperty", "another value, more")]
+            [InlineData("BooleanProperty", "another value, more")]
             public void Ctor_value_in_attribute_returns_copy_with_attribute(string propertyName, string ctorValue)
             {
                 var expected = new TestAttribute(ctorValue);
@@ -28,7 +28,7 @@ namespace Tagger.Tests
             [Theory]
             [InlineData("StringProperty", "value", 999)]
             [InlineData("IntProperty", "another value", 9999)]
-            [InlineData("LongProperty", "another value, more", 99999)]
+            [InlineData("BooleanProperty", "another value, more", 99999)]
             public void Ctor_and_property_set_value_in_attribute_returns_copy_with_attribute(
                 string propertyName,
                 string ctorValue,
@@ -50,14 +50,14 @@ namespace Tagger.Tests
             [Theory]
             [InlineData("StringProperty", "value", 999)]
             [InlineData("IntProperty", "another value", 9999)]
-            [InlineData("LongProperty", "another value, more", 99999)]
+            [InlineData("BooleanProperty", "another value, more", 99999)]
             public void Ctor_and_property_set_value_in_attribute_returns_copy_with_attribute_with_Anonymous_type(
                 string propertyName,
                 string ctorValue,
                 int memberData)
             {
                 var expected = new TestAttribute(ctorValue) { IntValue = memberData };
-                var anonymous = new { StringProperty = "", IntProperty = 0, LongProperty = 0L };
+                var anonymous = new { StringProperty = default(string), IntProperty = default(int), BooleanProperty = default(bool) };
 
                 var sut = new Mirror(anonymous).AddAttribute<TestAttribute>(
                     propertyName,
@@ -83,6 +83,26 @@ namespace Tagger.Tests
 
                 sut.Object.GetType().GetProperties().Should().Contain(
                     p => p.Name.Equals(propertyName) && p.PropertyType == propertyType);
+            }
+        }
+
+        public class ImplementInterface
+        {
+            [Theory]
+            [InlineData("this value", 123456, true)]
+            public void Can_set_and_get_directly_when_implementing_proper_interface(string stringValue, int intValue, bool boolValue)
+            {
+                var sut = new Mirror(new TestType()).Implement<ITestInterface>();
+
+                var result = sut.Unwrap<ITestInterface>();
+
+                result.StringProperty = stringValue;
+                result.IntProperty = intValue;
+                result.BooleanProperty = boolValue;
+
+                result.StringProperty.ShouldBeEquivalentTo(stringValue);
+                result.IntProperty.ShouldBeEquivalentTo(intValue);
+                result.BooleanProperty.ShouldBeEquivalentTo(boolValue);
             }
         }
     }

@@ -98,6 +98,12 @@ namespace Tagger
             }
         }
 
+        public T Unwrap<T>()
+            where T : class
+        {
+            return (T)this.Object;
+        }
+
         private object BuildObject(string typeName)
         {
             var name = new AssemblyName("_Tagger.Dynamic");
@@ -110,10 +116,10 @@ namespace Tagger
 
             foreach (var prop in properties)
             {
-                var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type);
+                var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, this.interfaces);
 
                 if (!attributes.Keys.Contains(prop.Name)) continue;
-                
+
                 var attrInfos = attributes[prop.Name];
                 foreach (var info in attrInfos)
                 {

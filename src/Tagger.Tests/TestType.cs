@@ -8,6 +8,6 @@ namespace Tagger.Tests
 
         public int IntProperty { get; set; }
 
-        public long LongProperty { get; set; }
+        public bool BooleanProperty { get; set; }
     }
 }
