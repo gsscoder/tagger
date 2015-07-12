@@ -13,7 +13,8 @@ namespace Tagger
     {
         private readonly Maybe<object> template;
         private readonly IDictionary<string, IEnumerable<AttributeInfo>> attributes;
-        private readonly IEnumerable<Tagger.PropertyInfo> properties; 
+        private readonly IEnumerable<Tagger.PropertyInfo> properties;
+        private readonly IEnumerable<Type> interfaces; 
         private bool built;
         private object newObject;
         
@@ -22,6 +23,7 @@ namespace Tagger
             this.template = Maybe.Nothing<object>();
             this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
             this.properties = Enumerable.Empty<Tagger.PropertyInfo>();
+            this.interfaces = Enumerable.Empty<Type>();
         }
 
         public Mirror(object template)
@@ -32,16 +34,19 @@ namespace Tagger
             this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
             this.properties = from p in template.GetType().GetProperties()
                               select new Tagger.PropertyInfo(p.Name, p.PropertyType);
+            this.interfaces = Enumerable.Empty<Type>();
         }
 
         private Mirror(
             Maybe<object> template,
             IDictionary<string, IEnumerable<AttributeInfo>> attributes,
-            IEnumerable<Tagger.PropertyInfo> properties)
+            IEnumerable<Tagger.PropertyInfo> properties,
+            IEnumerable<Type> interfaces)
         {
             this.template = template;
             this.attributes = attributes;
             this.properties = properties;
+            this.interfaces = interfaces;
         }
 
         public Mirror AddAttribute<T>(string propertyName, Action<AttributeConfiguration> configurator)
@@ -62,13 +67,20 @@ namespace Tagger
             }
 
             var attrs = new Dictionary<string, IEnumerable<AttributeInfo>>(attributes);
-            return new Mirror(this.template, attrs, this.properties);
+            return new Mirror(this.template, attrs, this.properties, this.interfaces);
+        }
+
+        public Mirror Implement<T>()
+            where T : class
+        {
+            return new Mirror(this.template, this.attributes, this.properties,
+                this.interfaces.Concat(new[] { typeof(T) }));
         }
 
         public Mirror AddProperty(string name, Type type)
         {
             var property = new Tagger.PropertyInfo(name, type);
-            return new Mirror(this.template, this.attributes, this.properties.Concat(new [] { property }));
+            return new Mirror(this.template, this.attributes, this.properties.Concat(new [] { property }), this.interfaces);
         }
 
         public object Object
@@ -93,6 +105,9 @@ namespace Tagger
             var moduleBuilder = builder.DefineDynamicModule(name.Name);
             var typeBuilder = moduleBuilder.DefineType(
                 string.Concat("_", typeName, "Mirror"), TypeAttributes.Public);
+
+            this.interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
+
             foreach (var prop in properties)
             {
                 var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type);
