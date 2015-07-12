@@ -90,9 +90,29 @@ namespace Tagger.Tests
         {
             [Theory]
             [InlineData("this value", 123456, true)]
+            [InlineData("this is another value", -123456, false)]
             public void Can_set_and_get_directly_when_implementing_proper_interface(string stringValue, int intValue, bool boolValue)
             {
                 var sut = new Mirror(new TestType()).Implement<ITestInterface>();
+
+                var result = sut.Unwrap<ITestInterface>();
+
+                result.StringProperty = stringValue;
+                result.IntProperty = intValue;
+                result.BooleanProperty = boolValue;
+
+                result.StringProperty.ShouldBeEquivalentTo(stringValue);
+                result.IntProperty.ShouldBeEquivalentTo(intValue);
+                result.BooleanProperty.ShouldBeEquivalentTo(boolValue);
+            }
+
+            [Theory]
+            [InlineData("this value", 123456, true)]
+            [InlineData("this is another value", -123456, false)]
+            public void Can_set_and_get_directly_when_implementing_proper_interface_with_Anonymous_type(string stringValue, int intValue, bool boolValue)
+            {
+                var anonymous = new { StringProperty = default(string), IntProperty = default(int), BooleanProperty = default(bool) };
+                var sut = new Mirror(anonymous).Implement<ITestInterface>();
 
                 var result = sut.Unwrap<ITestInterface>();
 
