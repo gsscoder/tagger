@@ -20,7 +20,7 @@ namespace Tagger.Tests
 
                 var sut = new Mirror(new TestType()).AddAttribute<TestAttribute>(
                     propertyName,
-                    info => info.CtorParameterValues = new object[] { ctorValue });
+                    new AttributeConfiguration().CtorValue(ctorValue));
 
                 sut.Object.GetType().SingleAttribute<TestAttribute>(propertyName).ShouldBeEquivalentTo(expected);
             }
@@ -38,11 +38,7 @@ namespace Tagger.Tests
 
                 var sut = new Mirror(new TestType()).AddAttribute<TestAttribute>(
                     propertyName,
-                    info =>
-                    {
-                        info.CtorParameterValues = new object[] { ctorValue };
-                        info.PropertyValues.Add("IntValue", memberData);
-                    });
+                    new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
                 sut.Object.GetType().SingleAttribute<TestAttribute>(propertyName).ShouldBeEquivalentTo(expected);
             }
@@ -61,11 +57,7 @@ namespace Tagger.Tests
 
                 var sut = new Mirror(anonymous).AddAttribute<TestAttribute>(
                     propertyName,
-                    info =>
-                    {
-                        info.CtorParameterValues = new object[] { ctorValue };
-                        info.PropertyValues.Add("IntValue", memberData);
-                    });
+                    new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
                 sut.Object.GetType().SingleAttribute<TestAttribute>(propertyName).ShouldBeEquivalentTo(expected);
             }

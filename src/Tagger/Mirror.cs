@@ -49,12 +49,10 @@ namespace Tagger
             this.interfaces = interfaces;
         }
 
-        public Mirror AddAttribute<T>(string propertyName, Action<AttributeConfiguration> configurator)
+        public Mirror AddAttribute<T>(string propertyName, AttributeConfiguration configuration)
             where T : Attribute
         {
-            var attrConfig = new AttributeConfiguration();
-            configurator(attrConfig);
-            var info = new AttributeInfo(typeof(T), attrConfig);
+            var info = new AttributeInfo(typeof(T), configuration);
 
             IEnumerable<AttributeInfo> infos;
             if (attributes.ContainsKey(propertyName))
@@ -129,7 +127,7 @@ namespace Tagger
                         if (!info.PropertyValues.Any())
                         {
                             propBuilder.SetCustomAttribute(
-                                new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues));
+                                new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues.ToArray()));
                         }
                         else
                         {
@@ -140,7 +138,7 @@ namespace Tagger
                             propBuilder.SetCustomAttribute(
                                 new CustomAttributeBuilder(
                                     ctorInfo,
-                                    info.CtorParameterValues,
+                                    info.CtorParameterValues.ToArray(),
                                     (from p in propWithValues select p.PropInfo).ToArray(),
                                     (from v in propWithValues select v.PropValue).ToArray()));
                         }

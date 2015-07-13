@@ -8,7 +8,7 @@ namespace Tagger
     public class AttributeInfo
     {
         private readonly Type attributeType;
-        private readonly object[] ctorParameterValues;
+        private readonly IEnumerable<object> ctorParameterValues;
         private readonly IDictionary<string, object> propertyValues;
 
         public AttributeInfo(Type attributeType, AttributeConfiguration configuration)
@@ -20,7 +20,7 @@ namespace Tagger
 
         public Type AttributeType { get { return attributeType; } }
 
-        public object[] CtorParameterValues { get { return ctorParameterValues; } }
+        public IEnumerable<object> CtorParameterValues { get { return ctorParameterValues; } }
 
         public IDictionary<string, object> PropertyValues { get { return propertyValues; } }
     }
