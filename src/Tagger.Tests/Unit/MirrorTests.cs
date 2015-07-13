@@ -17,13 +17,13 @@ namespace Tagger.Tests.Unit
             [InlineData("BooleanProperty", "another value, more")]
             public void Ctor_value_in_attribute_returns_copy_with_attribute(string propertyName, string ctorValue)
             {
-                var expected = new TestAttribute(ctorValue);
+                var expected = new SimpleAttribute(ctorValue);
 
-                var sut = new Mirror(new TestType()).AddAttribute<TestAttribute>(
+                var sut = new Mirror(new SimpleType()).AddAttribute<SimpleAttribute>(
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue));
 
-                sut.Object.GetType().SingleAttribute<TestAttribute>(propertyName).ShouldBeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).ShouldBeEquivalentTo(expected);
             }
 
             [Theory]
@@ -35,13 +35,13 @@ namespace Tagger.Tests.Unit
                 string ctorValue,
                 int memberData)
             {
-                var expected = new TestAttribute(ctorValue) { IntValue = memberData };
+                var expected = new SimpleAttribute(ctorValue) { IntValue = memberData };
 
-                var sut = new Mirror(new TestType()).AddAttribute<TestAttribute>(
+                var sut = new Mirror(new SimpleType()).AddAttribute<SimpleAttribute>(
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
-                sut.Object.GetType().SingleAttribute<TestAttribute>(propertyName).ShouldBeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).ShouldBeEquivalentTo(expected);
             }
 
             [Theory]
@@ -53,14 +53,14 @@ namespace Tagger.Tests.Unit
                 string ctorValue,
                 int memberData)
             {
-                var expected = new TestAttribute(ctorValue) { IntValue = memberData };
+                var expected = new SimpleAttribute(ctorValue) { IntValue = memberData };
                 var anonymous = new { StringProperty = default(string), IntProperty = default(int), BooleanProperty = default(bool) };
 
-                var sut = new Mirror(anonymous).AddAttribute<TestAttribute>(
+                var sut = new Mirror(anonymous).AddAttribute<SimpleAttribute>(
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
-                sut.Object.GetType().SingleAttribute<TestAttribute>(propertyName).ShouldBeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).ShouldBeEquivalentTo(expected);
             }
         }
 
@@ -86,9 +86,9 @@ namespace Tagger.Tests.Unit
             [InlineData("this is another value", -123456, false)]
             public void Can_set_and_get_directly_when_implementing_proper_interface(string stringValue, int intValue, bool boolValue)
             {
-                var sut = new Mirror(new TestType()).Implement<ITestInterface>();
+                var sut = new Mirror(new SimpleType()).Implement<ISimpleInterface>();
 
-                var result = sut.Unwrap<ITestInterface>();
+                var result = sut.Unwrap<ISimpleInterface>();
 
                 result.StringProperty = stringValue;
                 result.IntProperty = intValue;
@@ -105,9 +105,9 @@ namespace Tagger.Tests.Unit
             public void Can_set_and_get_directly_when_implementing_proper_interface_with_Anonymous_type(string stringValue, int intValue, bool boolValue)
             {
                 var anonymous = new { StringProperty = default(string), IntProperty = default(int), BooleanProperty = default(bool) };
-                var sut = new Mirror(anonymous).Implement<ITestInterface>();
+                var sut = new Mirror(anonymous).Implement<ISimpleInterface>();
 
-                var result = sut.Unwrap<ITestInterface>();
+                var result = sut.Unwrap<ISimpleInterface>();
 
                 result.StringProperty = stringValue;
                 result.IntProperty = intValue;
@@ -123,9 +123,9 @@ namespace Tagger.Tests.Unit
             [InlineData(new int[] { })]
             public void Can_set_and_get_sequence_directly_when_implementing_proper_interface(int[] values)
             {
-                var sut = new Mirror(new SequenceType()).Implement<IWithSequence>();
+                var sut = new Mirror(new IntSequenceType()).Implement<IWithIntSequence>();
 
-                var result = sut.Unwrap<IWithSequence>();
+                var result = sut.Unwrap<IWithIntSequence>();
 
                 result.IntSeqProperty = values;
 

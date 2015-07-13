@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tagger.Tests.Fakes
 {
-    public class SequenceType
+    public class IntSequenceType
     {
         public IEnumerable<int> IntSeqProperty { get; set; }
     }

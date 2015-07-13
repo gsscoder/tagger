@@ -4,11 +4,11 @@ using System;
 
 namespace Tagger.Tests.Fakes
 {
-    public class TestAttribute : Attribute
+    public class SimpleAttribute : Attribute
     {
         private readonly string name;
 
-        public TestAttribute(string name)
+        public SimpleAttribute(string name)
         {
             this.name = name;
         }

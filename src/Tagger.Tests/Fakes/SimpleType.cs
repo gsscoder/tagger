@@ -2,7 +2,7 @@
 
 namespace Tagger.Tests.Fakes
 {
-    public class TestType
+    public class SimpleType
     {
         public string StringProperty { get; set; }
 

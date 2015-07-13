@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Tagger.Tests.Fakes
 {
-    public interface IWithSequence
+    public interface ISimpleInterface
     {
-        IEnumerable<int> IntSeqProperty { get; set; }
+        string StringProperty { get; set; }
+
+        int IntProperty { get; set; }
+
+        bool BooleanProperty { get; set; }
     }
 }
