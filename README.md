@@ -14,4 +14,4 @@ var sut = new Mirror(new {
 
 var instance = sut.Unwrap<IMyInterface>();
 ```
-See this [unit test](https://github.com/gsscoder/tagger/blob/master/src/Tagger.Tests/MirrorTests.cs) for usage info.
+See this [unit test](https://github.com/gsscoder/tagger/blob/master/src/Tagger.Tests/Unit/MirrorTests.cs) for usage info.
