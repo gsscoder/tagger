@@ -65,14 +65,14 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ITestInterface.cs" />
-    <Compile Include="IWithSequence.cs" />
-    <Compile Include="MirrorTests.cs" />
+    <Compile Include="Fakes\ITestInterface.cs" />
+    <Compile Include="Fakes\IWithSequence.cs" />
+    <Compile Include="Unit\MirrorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExtensions.cs" />
-    <Compile Include="SequenceType.cs" />
-    <Compile Include="TestAttribute.cs" />
-    <Compile Include="TestType.cs" />
+    <Compile Include="Fakes\SequenceType.cs" />
+    <Compile Include="Fakes\TestAttribute.cs" />
+    <Compile Include="Fakes\TestType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

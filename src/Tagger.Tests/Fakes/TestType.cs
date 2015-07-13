@@ -1,6 +1,6 @@
 ﻿// Copyright 2015 Giacomo Stelluti Scala. All rights reserved. See doc/License.md in the project root for license information.
 
-namespace Tagger.Tests
+namespace Tagger.Tests.Fakes
 {
     public class TestType
     {

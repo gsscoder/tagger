@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Tagger.Tests
+namespace Tagger.Tests.Fakes
 {
     public class TestAttribute : Attribute
     {

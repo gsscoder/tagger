@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tagger.Tests
+namespace Tagger.Tests.Fakes
 {
     public class SequenceType
     {
