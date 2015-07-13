@@ -29,8 +29,7 @@ namespace Tagger
         {
             return new AttributeConfiguration(
                 this.ctorParameterValues.Concat(values),
-                this.propertyValues
-                );
+                this.propertyValues);
         }
 
         public AttributeConfiguration CtorValue(object value)
