@@ -4,7 +4,7 @@ using System;
 
 namespace Tagger
 {
-    class PropertyInfo
+    sealed class PropertyInfo
     {
         private readonly string name;
         private readonly Type type;

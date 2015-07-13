@@ -15,9 +15,9 @@ namespace Tagger
         {
         }
 
-        public IEnumerable<object> CtorParameterValues { get { return ctorParameterValues; } }
+        internal IEnumerable<object> CtorParameterValues { get { return ctorParameterValues; } }
 
-        public IDictionary<string, object> PropertyValues { get { return propertyValues; } }
+        internal IDictionary<string, object> PropertyValues { get { return propertyValues; } }
 
         private AttributeConfiguration(IEnumerable<object> ctorParameterValues, IDictionary<string, object> propertyValues)
         {

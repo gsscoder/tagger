@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Tagger
 {
-    public class AttributeInfo
+    sealed class AttributeInfo
     {
         private readonly Type attributeType;
         private readonly IEnumerable<object> ctorParameterValues;
