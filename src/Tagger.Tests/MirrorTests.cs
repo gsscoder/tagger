@@ -124,6 +124,20 @@ namespace Tagger.Tests
                 result.IntProperty.ShouldBeEquivalentTo(intValue);
                 result.BooleanProperty.ShouldBeEquivalentTo(boolValue);
             }
+
+            [Theory]
+            [InlineData(new[] {1, 2, 3, 4, 5, 6 ,7 ,8, 9})]
+            [InlineData(new int[] { })]
+            public void Can_set_and_get_sequence_directly_when_implementing_proper_interface(int[] values)
+            {
+                var sut = new Mirror(new SequenceType()).Implement<IWithSequence>();
+
+                var result = sut.Unwrap<IWithSequence>();
+
+                result.IntSeqProperty = values;
+
+                result.IntSeqProperty.ShouldBeEquivalentTo(values);
+            }
         }
     }
 }
