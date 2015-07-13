@@ -9,7 +9,7 @@ var sut = new Mirror(new {
   .AddAttribute<MyAttribute>(
     "StringProperty",
     new AttributeConfiguration()
-	    .CtorValue("ctor value")
+      .CtorValue("ctor value")
       .Property("AttributeProperty", "property value"));
 
 var instance = sut.Unwrap<IMyInterface>();
