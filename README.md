@@ -35,4 +35,4 @@ public class AddPropertyMethod
     }
 }
 ```
-See this [unit test](https://github.com/gsscoder/tagger/blob/master/src/Tagger.Tests/Unit/MirrorTests.cs) for more examples.
+See this [unit test](https://github.com/gsscoder/tagger/blob/master/tests/Tagger.Tests/Unit/MirrorTests.cs) for more examples.
