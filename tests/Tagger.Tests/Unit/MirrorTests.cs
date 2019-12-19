@@ -23,7 +23,7 @@ namespace Tagger.Tests.Unit
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue));
 
-                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).ShouldBeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().BeEquivalentTo(expected);
             }
 
             [Theory]
@@ -41,7 +41,7 @@ namespace Tagger.Tests.Unit
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
-                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).ShouldBeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().BeEquivalentTo(expected);
             }
 
             [Theory]
@@ -60,7 +60,7 @@ namespace Tagger.Tests.Unit
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
-                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).ShouldBeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().BeEquivalentTo(expected);
             }
         }
 
@@ -94,9 +94,9 @@ namespace Tagger.Tests.Unit
                 result.IntProperty = intValue;
                 result.BooleanProperty = boolValue;
 
-                result.StringProperty.ShouldBeEquivalentTo(stringValue);
-                result.IntProperty.ShouldBeEquivalentTo(intValue);
-                result.BooleanProperty.ShouldBeEquivalentTo(boolValue);
+                result.StringProperty.Should().BeEquivalentTo(stringValue);
+                result.IntProperty.Should().Be(intValue);
+                result.BooleanProperty.Should().Be(boolValue);
             }
 
             [Theory]
@@ -113,9 +113,9 @@ namespace Tagger.Tests.Unit
                 result.IntProperty = intValue;
                 result.BooleanProperty = boolValue;
 
-                result.StringProperty.ShouldBeEquivalentTo(stringValue);
-                result.IntProperty.ShouldBeEquivalentTo(intValue);
-                result.BooleanProperty.ShouldBeEquivalentTo(boolValue);
+                result.StringProperty.Should().BeEquivalentTo(stringValue);
+                result.IntProperty.Should().Be(intValue);
+                result.BooleanProperty.Should().Be(boolValue);
             }
 
             [Theory]
@@ -129,7 +129,7 @@ namespace Tagger.Tests.Unit
 
                 result.IntSeqProperty = values;
 
-                result.IntSeqProperty.ShouldBeEquivalentTo(values);
+                result.IntSeqProperty.Should().BeEquivalentTo(values);
             }
         }
     }
