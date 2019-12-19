@@ -26,7 +26,7 @@ namespace Tagger
 
         public Mirror(object template)
         {
-            if (template == null) throw new ArgumentNullException("template");
+            if (template == null) throw new ArgumentNullException(nameof(template));
 
             this.template = Maybe.Just(template);
             this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
