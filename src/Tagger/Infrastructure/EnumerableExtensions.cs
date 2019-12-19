@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace Tagger.Infrastructure
 {
-    using System;
-    using System.Collections.Generic;
-
     static partial class EnumerableExtensions
     {
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
