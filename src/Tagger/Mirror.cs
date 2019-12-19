@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Tagger.Infrastructure;
-using System.Runtime.CompilerServices;
 
 namespace Tagger
 {
@@ -106,7 +105,6 @@ namespace Tagger
         private object BuildObject(string typeName)
         {
             var name = new AssemblyName("_Tagger.Dynamic");
-            // var builder = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
             var builder = AssemblyBuilder.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
             var moduleBuilder = builder.DefineDynamicModule(name.Name);
             var typeBuilder = moduleBuilder.DefineType(
@@ -147,7 +145,6 @@ namespace Tagger
                     });
             }
 
-            // var newType = typeBuilder.CreateType();
             var newType = typeBuilder.CreateTypeInfo();
             var instance = Activator.CreateInstance(newType);
             return instance;
