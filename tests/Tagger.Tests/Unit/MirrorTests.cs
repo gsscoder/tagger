@@ -21,7 +21,7 @@ namespace Tagger.Tests.Unit
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue));
 
-                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().BeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().Be(expected);
             }
 
             [Theory]
@@ -39,7 +39,7 @@ namespace Tagger.Tests.Unit
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
-                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().BeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().Be(expected);
             }
 
             [Theory]
@@ -58,7 +58,7 @@ namespace Tagger.Tests.Unit
                     propertyName,
                     new AttributeConfiguration().CtorValue(ctorValue).Property("IntValue", memberData));
 
-                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().BeEquivalentTo(expected);
+                sut.Object.GetType().SingleAttribute<SimpleAttribute>(propertyName).Should().Be(expected);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Tagger.Tests.Unit
                 result.IntProperty = intValue;
                 result.BooleanProperty = boolValue;
 
-                result.StringProperty.Should().BeEquivalentTo(stringValue);
+                result.StringProperty.Should().Be(stringValue);
                 result.IntProperty.Should().Be(intValue);
                 result.BooleanProperty.Should().Be(boolValue);
             }
@@ -111,7 +111,7 @@ namespace Tagger.Tests.Unit
                 result.IntProperty = intValue;
                 result.BooleanProperty = boolValue;
 
-                result.StringProperty.Should().BeEquivalentTo(stringValue);
+                result.StringProperty.Should().Be(stringValue);
                 result.IntProperty.Should().Be(intValue);
                 result.BooleanProperty.Should().Be(boolValue);
             }
