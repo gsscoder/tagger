@@ -2,6 +2,10 @@
 
 .NET library to mock object properties with attributes.
 
+## What is for?
+
+I initially designed this library for writing tests for [Command Line Parser Library](https://github.com/commandlineparser/commandline). Although it's main purpose is testing, it can be helpful in the scope of dynamic programming.
+
 ## At a glance
 
 ```csharp
