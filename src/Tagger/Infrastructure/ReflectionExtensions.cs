@@ -26,8 +26,7 @@ namespace Tagger.Infrastructure
             getterIL.Emit(OpCodes.Ldarg_0);
             getterIL.Emit(OpCodes.Ldfld, fieldBuilder);
             getterIL.Emit(OpCodes.Ret);
-            if (fromInterface)
-            {
+            if (fromInterface) {
                 typeBuilder.DefineMethodOverride(getterBuilder, interfaces.FindGetter(name));
             }
             //Setter
@@ -42,8 +41,7 @@ namespace Tagger.Infrastructure
             setterIL.Emit(OpCodes.Ldarg_1);
             setterIL.Emit(OpCodes.Stfld, fieldBuilder);
             setterIL.Emit(OpCodes.Ret);
-            if (fromInterface)
-            {
+            if (fromInterface) {
                 typeBuilder.DefineMethodOverride(setterBuilder, interfaces.FindSetter(name));
             }
 

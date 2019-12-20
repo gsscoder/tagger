@@ -129,8 +129,7 @@ namespace Tagger.Infrastructure
         public static T FromJust<T>(this Maybe<T> maybe, Exception exceptionToThrow = null)
         {
             T value;
-            if (maybe.MatchJust(out value))
-            {
+            if (maybe.MatchJust(out value)) {
                 return value;
             }
             throw exceptionToThrow ?? new ArgumentException("Value empty.");
