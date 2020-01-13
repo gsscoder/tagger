@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Tagger.Infrastructure;
 using CSharpx;
+using Tagger.Internal;
 
 namespace Tagger
 {
