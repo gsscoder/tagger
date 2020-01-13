@@ -10,7 +10,7 @@
     <Copyright>Copyright © Giacomo Stelluti Scala, 2015-2019</Copyright>
     <PackageProjectUrl>https://github.com/gsscoder/tagger</PackageProjectUrl>
     <RepositoryUrl>https://github.com/gsscoder/tagger</RepositoryUrl>
-    <Company />
+    <DefineConstants>$(DefineConstants);CSX_MAYBE_INTERNAL;CSX_REM_EITHER_FUNC;CSX_ENUM_INTERNAL;CSX_REM_CRYPTORAND</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
