@@ -1,4 +1,4 @@
-# Tagger
+# Tagger.Reflect
 
 .NET library to mock object properties with attributes.
 
@@ -50,9 +50,10 @@ public class AddPropertyMethod
     }
 }
 ```
-See this [unit test](https://github.com/gsscoder/tagger/blob/master/tests/Tagger.Tests/Unit/MirrorTests.cs) for more examples.
+See this [unit test](https://github.com/gsscoder/tagger/blob/master/tests/Tagger.Reflect.Tests/Unit/MirrorTests.cs) for more examples.
 
 ## Latest Changes
 
 - Ported to .NET Core.
 - Compiles for .NET Framework 4.5 and 4.6.1.
+- Name changed to Tagger.Reflect
