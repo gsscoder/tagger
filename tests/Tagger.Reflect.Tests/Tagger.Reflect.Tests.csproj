@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/Tagger/Tagger.csproj" />
+    <ProjectReference Include="../../src/Tagger.Reflect/Tagger.Reflect.csproj" />
   </ItemGroup>
 
 </Project>

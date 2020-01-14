@@ -6,6 +6,17 @@
 
 I initially designed this library for writing tests for [Command Line Parser Library](https://github.com/commandlineparser/commandline). Although it's main purpose is testing, it can be helpful in the scope of dynamic programming.
 
+## Targets
+
+- .NET Standard 2.0
+- .NET Framework 4.5, 4.6.1
+
+## Install via NuGet
+
+```sh
+$ dotnet add package Tagger.Reflect --version 1.0.0
+```
+
 ## At a glance
 
 ```csharp
@@ -40,3 +51,8 @@ public class AddPropertyMethod
 }
 ```
 See this [unit test](https://github.com/gsscoder/tagger/blob/master/tests/Tagger.Tests/Unit/MirrorTests.cs) for more examples.
+
+## Latest Changes
+
+- Ported to .NET Core.
+- Compiles for .NET Framework 4.5 and 4.6.1.

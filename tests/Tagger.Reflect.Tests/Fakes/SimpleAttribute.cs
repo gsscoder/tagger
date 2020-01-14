@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tagger.Tests.Fakes
+namespace Tagger.Reflect.Tests.Fakes
 {
     public class SimpleAttribute : Attribute
     {

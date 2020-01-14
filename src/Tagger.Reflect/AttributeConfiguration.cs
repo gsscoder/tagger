@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Tagger
+namespace Tagger.Reflect
 {
     public class AttributeConfiguration
     {

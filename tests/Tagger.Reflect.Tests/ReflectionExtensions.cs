@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tagger.Tests
+namespace Tagger.Reflect.Tests
 {
     static class ReflectionExtensions
     {

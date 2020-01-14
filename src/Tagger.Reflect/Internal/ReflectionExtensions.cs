@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Tagger.Internal
+namespace Tagger.Reflect.Internal
 {
     static class ReflectionExtensions
     {

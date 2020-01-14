@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger", "src\Tagger\Tagger.csproj", "{AD34D276-F9FF-4C15-9DA3-56D15D5849AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Reflect", "src\Tagger.Reflect\Tagger.Reflect.csproj", "{AD34D276-F9FF-4C15-9DA3-56D15D5849AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{92499B96-F83A-438F-9DC0-8E4F5199D038}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{92499B
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Tests", "tests\Tagger.Tests\Tagger.Tests.csproj", "{6100438C-F4D9-4F7E-B256-5F89F2452792}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Reflect.Tests", "tests\Tagger.Reflect.Tests\Tagger.Reflect.Tests.csproj", "{6100438C-F4D9-4F7E-B256-5F89F2452792}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

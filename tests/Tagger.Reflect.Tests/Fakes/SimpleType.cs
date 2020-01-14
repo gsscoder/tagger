@@ -1,4 +1,4 @@
-﻿namespace Tagger.Tests.Fakes
+﻿namespace Tagger.Reflect.Tests.Fakes
 {
     public class SimpleType
     {

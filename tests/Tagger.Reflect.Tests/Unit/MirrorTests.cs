@@ -1,9 +1,9 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using Tagger.Tests.Fakes;
+using Tagger.Reflect.Tests.Fakes;
 
-namespace Tagger.Tests.Unit
+namespace Tagger.Reflect.Tests.Unit
 {
     public class MirrorTests
     {

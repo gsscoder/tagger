@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tagger.Tests.Fakes
+namespace Tagger.Reflect.Tests.Fakes
 {
     public class IntSequenceType
     {

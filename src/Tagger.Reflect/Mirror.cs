@@ -4,15 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using CSharpx;
-using Tagger.Internal;
+using Tagger.Reflect.Internal;
 
-namespace Tagger
+namespace Tagger.Reflect
 {
     public sealed class Mirror
     {
         private readonly Maybe<object> template;
         private readonly IDictionary<string, IEnumerable<AttributeInfo>> attributes;
-        private readonly IEnumerable<Tagger.PropertyInfo> properties;
+        private readonly IEnumerable<Tagger.Reflect.PropertyInfo> properties;
         private readonly IEnumerable<Type> interfaces; 
         private bool built;
         private object newObject;
@@ -21,7 +21,7 @@ namespace Tagger
         {
             this.template = Maybe.Nothing<object>();
             this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
-            this.properties = Enumerable.Empty<Tagger.PropertyInfo>();
+            this.properties = Enumerable.Empty<Tagger.Reflect.PropertyInfo>();
             this.interfaces = Enumerable.Empty<Type>();
         }
 
@@ -32,14 +32,14 @@ namespace Tagger
             this.template = Maybe.Just(template);
             this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
             this.properties = from p in template.GetType().GetProperties()
-                              select new Tagger.PropertyInfo(p.Name, p.PropertyType);
+                              select new Tagger.Reflect.PropertyInfo(p.Name, p.PropertyType);
             this.interfaces = Enumerable.Empty<Type>();
         }
 
         private Mirror(
             Maybe<object> template,
             IDictionary<string, IEnumerable<AttributeInfo>> attributes,
-            IEnumerable<Tagger.PropertyInfo> properties,
+            IEnumerable<Tagger.Reflect.PropertyInfo> properties,
             IEnumerable<Type> interfaces)
         {
             this.template = template;
@@ -54,12 +54,10 @@ namespace Tagger
             var info = new AttributeInfo(typeof(T), configuration);
 
             IEnumerable<AttributeInfo> infos;
-            if (attributes.ContainsKey(propertyName))
-            {
+            if (attributes.ContainsKey(propertyName)) {
                 infos = attributes[propertyName].Concat(new[] { info });
             }
-            else
-            {
+            else {
                 attributes.Add(propertyName, new[] { info });
             }
 
@@ -76,7 +74,7 @@ namespace Tagger
 
         public Mirror AddProperty(string name, Type type)
         {
-            var property = new Tagger.PropertyInfo(name, type);
+            var property = new Tagger.Reflect.PropertyInfo(name, type);
             return new Mirror(this.template, this.attributes, this.properties.Concat(new [] { property }), this.interfaces);
         }
 
@@ -84,8 +82,7 @@ namespace Tagger
         {
             get
             {
-                if (built)
-                {
+                if (built) {
                     return newObject;
                 }
                 var typeName = template.Return(t => t.GetType().Name, GenerateTypeName());
@@ -111,8 +108,7 @@ namespace Tagger
 
             this.interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
 
-            foreach(var prop in this.properties)
-            {
+            foreach(var prop in this.properties) {
                 var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, this.interfaces);
 
                 if (!attributes.Keys.Contains(prop.Name)) continue;
