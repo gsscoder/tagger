@@ -116,16 +116,15 @@ namespace Tagger.Reflect
                 var attrInfos = attributes[prop.Name];
                 attrInfos.ForEach(info =>
                     {
-                        var ctorTypes = info.CtorParameterValues.Select(v => v.GetType()).ToArray();
+                        var ctorTypes = (from type in info.CtorParameterValues
+                                         select type.GetType()).ToArray();
                         var ctorInfo = info.AttributeType.GetConstructor(ctorTypes);
 
-                        if (!info.PropertyValues.Any())
-                        {
+                        if (!info.PropertyValues.Any()) {
                             propBuilder.SetCustomAttribute(
                                 new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues.ToArray()));
                         }
-                        else
-                        {
+                        else {
                             var propWithValues =
                                 from pi in info.AttributeType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                                 join pv in info.PropertyValues on pi.Name equals pv.Key
