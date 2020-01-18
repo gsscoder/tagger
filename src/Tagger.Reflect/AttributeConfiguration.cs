@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class AttributeConfiguration
+public sealed class AttributeConfiguration
 {
     private AttributeConfiguration(
         IEnumerable<object> ctorParameterValues,
