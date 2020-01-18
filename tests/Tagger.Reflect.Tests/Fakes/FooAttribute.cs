@@ -1,10 +1,10 @@
 ﻿using System;
 
-public class SimpleAttribute : Attribute
+public class FooAttribute : Attribute
 {
     private readonly string name;
 
-    public SimpleAttribute(string name)
+    public FooAttribute(string name)
     {
         this.name = name;
     }
@@ -14,5 +14,5 @@ public class SimpleAttribute : Attribute
         get { return name; }
     }
 
-    public int IntValue { get; set; }
+    public int Value { get; set; }
 }
