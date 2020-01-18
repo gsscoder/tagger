@@ -7,42 +7,30 @@ using CSharpx;
 
 public sealed class Mirror
 {
-    private readonly Maybe<object> _template;
-    private readonly IDictionary<string, IEnumerable<AttributeMeta>> _attributes;
-    private readonly IEnumerable<PropertyMeta> _properties;
-    private readonly IEnumerable<Type> _interfaces; 
+    private readonly Metadata _metadata;
     private bool _built;
     private object _newObject;
     
     public Mirror()
     {
-        _template = Maybe.Nothing<object>();
-        _attributes = new Dictionary<string, IEnumerable<AttributeMeta>>();
-        _properties = Enumerable.Empty<PropertyMeta>();
-        _interfaces = Enumerable.Empty<Type>();
+        _metadata = new Metadata();
     }
 
     public Mirror(object template)
     {
         if (template == null) throw new ArgumentNullException(nameof(template));
 
-        _template = Maybe.Just(template);
-        _attributes = new Dictionary<string, IEnumerable<AttributeMeta>>();
-        _properties = from p in template.GetType().GetProperties()
-                            select new PropertyMeta(p.Name, p.PropertyType);
-        _interfaces = Enumerable.Empty<Type>();
+        _metadata = new Metadata(
+            Maybe.Just(template),
+            new Dictionary<string, IEnumerable<AttributeMeta>>(),
+            from p in template.GetType().GetProperties()
+            select new PropertyMeta(p.Name, p.PropertyType),
+            Enumerable.Empty<Type>());
     }
 
-    private Mirror(
-        Maybe<object> template,
-        IDictionary<string, IEnumerable<AttributeMeta>> attributes,
-        IEnumerable<PropertyMeta> properties,
-        IEnumerable<Type> interfaces)
+    private Mirror(Metadata metadata)
     {
-        _template = template;
-        _attributes = attributes;
-        _properties = properties;
-        _interfaces = interfaces;
+        _metadata = metadata;
     }
 
     public Mirror AddAttribute<T>(string propertyName, AttributeConfiguration configuration)
@@ -51,28 +39,31 @@ public sealed class Mirror
         var info = new AttributeMeta(typeof(T), configuration);
 
         IEnumerable<AttributeMeta> infos;
-        if (_attributes.ContainsKey(propertyName)) {
-            infos = _attributes[propertyName].Concat(new[] { info });
+        if (_metadata.Attributes.ContainsKey(propertyName)) {
+            infos = _metadata.Attributes[propertyName].Concat(new[] { info });
         }
         else {
-            _attributes.Add(propertyName, new[] { info });
+            _metadata.Attributes.Add(propertyName, new[] { info });
         }
 
-        var attrs = new Dictionary<string, IEnumerable<AttributeMeta>>(_attributes);
-        return new Mirror(_template, attrs, _properties, _interfaces);
+        var attrs = new Dictionary<string, IEnumerable<AttributeMeta>>(_metadata.Attributes);
+        return new Mirror(_metadata);
     }
 
     public Mirror Implement<T>()
         where T : class
     {
-        return new Mirror(_template, _attributes, _properties,
-            _interfaces.Concat(new[] { typeof(T) }));
+        return new Mirror(
+            _metadata.WithInterfaces(
+                _metadata.Interfaces.Concat(new[] { typeof(T) })));
     }
 
     public Mirror AddProperty(string name, Type type)
     {
         var property = new PropertyMeta(name, type);
-        return new Mirror(_template, _attributes, _properties.Concat(new [] { property }), _interfaces);
+        return new Mirror(
+            _metadata.WithProperties(
+                _metadata.Properties.Concat(new[] { property })));
     }
 
     public object Object
@@ -82,7 +73,7 @@ public sealed class Mirror
             if (_built) {
                 return _newObject;
             }
-            var typeName = _template.Return(t => t.GetType().Name, GenerateTypeName());
+            var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
             _newObject = BuildObject(typeName);
             _built = true;
             return _newObject;
@@ -103,14 +94,14 @@ public sealed class Mirror
         var typeBuilder = moduleBuilder.DefineType(
             string.Concat("_", typeName, "Mirror"), TypeAttributes.Public);
 
-        _interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
+        _metadata.Interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
 
-        foreach(var prop in _properties) {
-            var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, _interfaces);
+        foreach(var prop in _metadata.Properties) {
+            var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, _metadata.Interfaces);
 
-            if (!_attributes.Keys.Contains(prop.Name)) continue;
+            if (!_metadata.Attributes.Keys.Contains(prop.Name)) continue;
 
-            var attrInfos = _attributes[prop.Name];
+            var attrInfos = _metadata.Attributes[prop.Name];
             attrInfos.ForEach(info =>
                 {
                     var ctorTypes = (from type in info.CtorParameterValues
