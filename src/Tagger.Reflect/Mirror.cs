@@ -30,6 +30,14 @@ public sealed class Mirror
         _metadata = metadata;
     }
 
+    public Mirror Implement<T>()
+        where T : class
+    {
+        return new Mirror(
+            _metadata.WithInterfaces(
+                _metadata.Interfaces.Concat(new[] { typeof(T) })));
+    }
+
     public Mirror AddAttribute<T>(string propertyName, AttributeConfiguration configuration)
         where T : Attribute
     {
@@ -47,20 +55,18 @@ public sealed class Mirror
         return new Mirror(_metadata);
     }
 
-    public Mirror Implement<T>()
-        where T : class
-    {
-        return new Mirror(
-            _metadata.WithInterfaces(
-                _metadata.Interfaces.Concat(new[] { typeof(T) })));
-    }
-
     public Mirror AddProperty(string name, Type type)
     {
         var property = new PropertyMeta(name, type);
         return new Mirror(
             _metadata.WithProperties(
                 _metadata.Properties.Concat(new[] { property })));
+    }
+
+    public T Unwrap<T>()
+        where T : class
+    {
+        return (T)Object;
     }
 
     public object Object
@@ -77,12 +83,6 @@ public sealed class Mirror
                 return _object;
             }
         }
-    }
-
-    public T Unwrap<T>()
-        where T : class
-    {
-        return (T)Object;
     }
 
     private object BuildObject(string typeName)
