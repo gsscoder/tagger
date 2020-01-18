@@ -103,13 +103,13 @@ public sealed class Mirror
             var attrInfos = _metadata.Attributes[prop.Name];
             attrInfos.ForEach(info =>
                 {
-                    var ctorTypes = (from type in info.CtorParameterValues
+                    var ctorTypes = (from type in info.CtorParameters
                                         select type.GetType()).ToArray();
                     var ctorInfo = info.AttributeType.GetConstructor(ctorTypes);
 
                     if (!info.PropertyValues.Any()) {
                         propBuilder.SetCustomAttribute(
-                            new CustomAttributeBuilder(ctorInfo, info.CtorParameterValues.ToArray()));
+                            new CustomAttributeBuilder(ctorInfo, info.CtorParameters.ToArray()));
                     }
                     else {
                         var propWithValues =
@@ -119,7 +119,7 @@ public sealed class Mirror
                         propBuilder.SetCustomAttribute(
                             new CustomAttributeBuilder(
                                 ctorInfo,
-                                info.CtorParameterValues.ToArray(),
+                                info.CtorParameters.ToArray(),
                                 (from p in propWithValues select p.PropInfo).ToArray(),
                                 (from v in propWithValues select v.PropValue).ToArray()));
                     }

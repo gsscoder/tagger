@@ -53,6 +53,7 @@ public sealed class AttributeBinder
         return new AttributeMeta(
             PropertyName,
             Type,
-            new AttributeConfiguration(CtorParameters, PropertyValues));
+            CtorParameters,
+            PropertyValues);
     }
 }
