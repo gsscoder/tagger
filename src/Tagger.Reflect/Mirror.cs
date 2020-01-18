@@ -7,14 +7,11 @@ using CSharpx;
 
 public sealed class Mirror
 {
-    private readonly Metadata _metadata;
+    private readonly Metadata _metadata = new Metadata();
     private bool _built;
-    private object _newObject;
+    private object _object;
     
-    public Mirror()
-    {
-        _metadata = new Metadata();
-    }
+    public Mirror() { }
 
     public Mirror(object template)
     {
@@ -71,12 +68,12 @@ public sealed class Mirror
         get
         {
             if (_built) {
-                return _newObject;
+                return _object;
             }
             var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
-            _newObject = BuildObject(typeName);
+            _object = BuildObject(typeName);
             _built = true;
-            return _newObject;
+            return _object;
         }
     }
 
