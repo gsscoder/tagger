@@ -33,7 +33,7 @@ var instance = mirror.Unwrap<IMyInterface>();
 // instance layout:
 // anonymous : IMyInterface {
 // ...
-//     [MyAttribute("ctor", AttrProp="value")]
+//     [MyAttribute("ctor", AttrProp = "value")]
 //     public string Foo { get; set; } 
 // ...
 // }
