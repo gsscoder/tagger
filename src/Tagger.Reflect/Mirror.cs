@@ -85,7 +85,7 @@ public sealed class Mirror
         }
     }
 
-    private object BuildObject(string typeName)
+    object BuildObject(string typeName)
     {
         var name = new AssemblyName("_Tagger.Dynamic");
         var builder = AssemblyBuilder.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
@@ -131,7 +131,7 @@ public sealed class Mirror
         return instance;
     }
 
-    private static string GenerateTypeName()
+    static string GenerateTypeName()
     {
         return new Guid().ToString();
     }
