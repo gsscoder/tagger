@@ -41,6 +41,8 @@ public sealed class Mirror
 
     public Mirror Add(Action<AttributeBinder> binder)
     {
+        Guard.AgainstNull(nameof(binder), binder);
+
         var config = new AttributeBinder();
         binder(config);
         var meta = config.ToAttributeMeta();
@@ -56,6 +58,8 @@ public sealed class Mirror
 
     public Mirror Add(Action<PropertyBinder> binder)
     {
+        Guard.AgainstNull(nameof(binder), binder);
+
         var config = new PropertyBinder();
         binder(config);
 
