@@ -1,11 +1,8 @@
-﻿namespace Tagger.Reflect.Tests.Fakes
+﻿public class SimpleType
 {
-    public class SimpleType
-    {
-        public string StringProperty { get; set; }
+    public string StringProperty { get; set; }
 
-        public int IntProperty { get; set; }
+    public int IntProperty { get; set; }
 
-        public bool BooleanProperty { get; set; }
-    }
+    public bool BooleanProperty { get; set; }
 }

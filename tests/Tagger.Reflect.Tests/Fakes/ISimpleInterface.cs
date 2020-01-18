@@ -1,11 +1,8 @@
-﻿namespace Tagger.Reflect.Tests.Fakes
+﻿public interface ISimpleInterface
 {
-    public interface ISimpleInterface
-    {
-        string StringProperty { get; set; }
+    string StringProperty { get; set; }
 
-        int IntProperty { get; set; }
+    int IntProperty { get; set; }
 
-        bool BooleanProperty { get; set; }
-    }
+    bool BooleanProperty { get; set; }
 }

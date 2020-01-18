@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tagger.Reflect.Tests.Fakes
+public interface IWithIntSequence
 {
-    public interface IWithIntSequence
-    {
-        IEnumerable<int> IntSeqProperty { get; set; }
-    }
+    IEnumerable<int> IntSeqProperty { get; set; }
 }
