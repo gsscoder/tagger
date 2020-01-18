@@ -1,4 +1,4 @@
-# Tagger.Reflect
+# <img src="/assets/icon.png" height="30px" alt="CSharpx Logo"> Tagger.Reflect
 
 .NET library to mock object properties with attributes.
 
@@ -44,3 +44,7 @@ See this [unit test](https://github.com/gsscoder/tagger/blob/master/tests/Tagger
 ## Latest Changes
 
 - New fluent interface.
+
+## Icon
+
+[Tag](https://thenounproject.com/search/?q=tagger&i=3051269) icon designed by Eucalyp from [The Noun Project](https://thenounproject.com/).
