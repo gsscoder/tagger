@@ -13,8 +13,8 @@ namespace Tagger.Reflect
         private readonly IDictionary<string, IEnumerable<AttributeInfo>> _attributes;
         private readonly IEnumerable<Tagger.Reflect.PropertyInfo> _properties;
         private readonly IEnumerable<Type> _interfaces; 
-        private bool built;
-        private object newObject;
+        private bool _built;
+        private object _newObject;
         
         public Mirror()
         {
@@ -81,13 +81,13 @@ namespace Tagger.Reflect
         {
             get
             {
-                if (built) {
-                    return newObject;
+                if (_built) {
+                    return _newObject;
                 }
                 var typeName = _template.Return(t => t.GetType().Name, GenerateTypeName());
-                newObject = BuildObject(typeName);
-                built = true;
-                return newObject;
+                _newObject = BuildObject(typeName);
+                _built = true;
+                return _newObject;
             }
         }
 
