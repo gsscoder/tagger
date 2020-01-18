@@ -13,4 +13,10 @@ static class Guard
         if (value.Trim() == string.Empty) throw new ArgumentException(
             $"{argumentName} cannot be empty or contains only white spaces", argumentName);
     }
+
+    public static void AgainstNotInterface<T>()
+    {
+        if (!typeof(T).IsInterface) throw new ArgumentException(
+            "T must be an interface type");
+    }
 }

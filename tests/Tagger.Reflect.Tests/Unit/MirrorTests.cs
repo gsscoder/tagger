@@ -129,5 +129,16 @@ public class MirrorTests
 
             result.BarInt32Sequence.Should().BeEquivalentTo(values);
         }
+
+        [Fact]
+        public void Should_not_implement_a_non_interface_type()
+        {
+            var sut = new Mirror();
+
+            Action action = () => sut.Implement<FooAbstract>();
+
+            action.Should().ThrowExactly<ArgumentException>()
+                .WithMessage("T must be an interface type");
+        }
     }
 }

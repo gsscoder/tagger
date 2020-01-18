@@ -31,8 +31,9 @@ public sealed class Mirror
     }
 
     public Mirror Implement<T>()
-        where T : class
     {
+        Guard.AgainstNotInterface<T>();
+
         return new Mirror(
             _metadata.WithInterfaces(
                 _metadata.Interfaces.Concat(new[] { typeof(T) })));
