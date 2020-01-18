@@ -3,7 +3,7 @@ using System.Linq;
 
 public sealed class AttributeConfiguration
 {
-    private AttributeConfiguration(
+    internal AttributeConfiguration(
         IEnumerable<object> ctorParameterValues,
         IDictionary<string, object> propertyValues)
     {

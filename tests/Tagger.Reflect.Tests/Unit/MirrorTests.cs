@@ -14,9 +14,8 @@ public class MirrorTests
         {
             var expected = new FooAttribute(ctorValue);
 
-            var sut = new Mirror(new Foo()).AddAttribute<FooAttribute>(
-                propertyName,
-                new AttributeConfiguration().CtorValue(ctorValue));
+            var sut = new Mirror(new Foo()).Add(x =>
+                x.InProperty(propertyName).DefineType<FooAttribute>().WithCtorParameters(ctorValue));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -32,9 +31,11 @@ public class MirrorTests
         {
             var expected = new FooAttribute(ctorValue) { Value = memberData };
 
-            var sut = new Mirror(new Foo()).AddAttribute<FooAttribute>(
-                propertyName,
-                new AttributeConfiguration().CtorValue(ctorValue).Property("Value", memberData));
+            var sut = new Mirror(new Foo()).Add(x =>
+                x.InProperty(propertyName)
+                    .DefineType<FooAttribute>()
+                    .WithCtorParameters(ctorValue)
+                    .WithPropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -51,9 +52,11 @@ public class MirrorTests
             var expected = new FooAttribute(ctorValue) { Value = memberData };
             var anonymous = new { FooString = default(string), BarInt32 = default(int), BazBoolean = default(bool) };
 
-            var sut = new Mirror(anonymous).AddAttribute<FooAttribute>(
-                propertyName,
-                new AttributeConfiguration().CtorValue(ctorValue).Property("Value", memberData));
+            var sut = new Mirror(anonymous).Add(x =>
+                x.InProperty(propertyName)
+                    .DefineType<FooAttribute>()
+                    .WithCtorParameters(ctorValue)
+                    .WithPropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -67,7 +70,7 @@ public class MirrorTests
         [InlineData("DynamicLong", typeof(long))]
         public void Add_property_to_new_object_returns_object_with_new_property(string propertyName, Type propertyType)
         {
-            var sut = new Mirror().AddProperty(propertyName, propertyType);
+            var sut = new Mirror().Add(x => x.Property(propertyName).OfType(propertyType));
 
             sut.Object.GetType().GetProperties().Should().Contain(
                 p => p.Name.Equals(propertyName) && p.PropertyType == propertyType);

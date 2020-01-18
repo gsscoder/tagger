@@ -38,29 +38,29 @@ public sealed class Mirror
                 _metadata.Interfaces.Concat(new[] { typeof(T) })));
     }
 
-    public Mirror AddAttribute<T>(string propertyName, AttributeConfiguration configuration)
-        where T : Attribute
+    public Mirror Add(Action<AttributeBinder> binder)
     {
-        var info = new AttributeMeta(typeof(T), configuration);
+        var config = new AttributeBinder();
+        binder(config);
+        var meta = config.ToAttributeMeta();
 
-        IEnumerable<AttributeMeta> infos;
-        if (_metadata.Attributes.ContainsKey(propertyName)) {
-            infos = _metadata.Attributes[propertyName].Concat(new[] { info });
+        if (_metadata.Attributes.ContainsKey(meta.PropertyName)) {
+            _metadata.Attributes[meta.PropertyName] = _metadata.Attributes[meta.PropertyName].Concat(new[] { meta });
         }
         else {
-            _metadata.Attributes.Add(propertyName, new[] { info });
+            _metadata.Attributes.Add(meta.PropertyName, new[] { meta });
         }
-
-        var attrs = new Dictionary<string, IEnumerable<AttributeMeta>>(_metadata.Attributes);
         return new Mirror(_metadata);
     }
 
-    public Mirror AddProperty(string name, Type type)
+    public Mirror Add(Action<PropertyBinder> binder)
     {
-        var property = new PropertyMeta(name, type);
+        var config = new PropertyBinder();
+        binder(config);
+
         return new Mirror(
             _metadata.WithProperties(
-                _metadata.Properties.Concat(new[] { property })));
+                _metadata.Properties.Concat(new[] { config.ToPropertyMeta() })));
     }
 
     public T Unwrap<T>()

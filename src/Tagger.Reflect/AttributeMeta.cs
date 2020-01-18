@@ -3,12 +3,16 @@ using System.Collections.Generic;
 
 sealed class AttributeMeta
 {
-    public AttributeMeta(Type attributeType, AttributeConfiguration configuration)
+    public AttributeMeta(
+        string propertyName, Type attributeType, AttributeConfiguration configuration)
     {
+        PropertyName = propertyName;
         AttributeType = attributeType;
         CtorParameterValues = configuration.CtorParameterValues;
         PropertyValues = configuration.PropertyValues;
     }
+
+    public string PropertyName { get; private set; }
 
     public Type AttributeType { get; private set; }
 
