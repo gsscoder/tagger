@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-sealed class AttributeMeta
+struct AttributeMeta
 {
     public AttributeMeta(
         string propertyName,
