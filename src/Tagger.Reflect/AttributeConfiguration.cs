@@ -3,44 +3,43 @@ using System.Linq;
 
 public class AttributeConfiguration
 {
-    private readonly IEnumerable<object> _ctorParameterValues;
-    private readonly IDictionary<string, object> _propertyValues;
+    private AttributeConfiguration(
+        IEnumerable<object> ctorParameterValues,
+        IDictionary<string, object> propertyValues)
+    {
+        CtorParameterValues = ctorParameterValues;
+        PropertyValues = propertyValues;
+    }
 
     public AttributeConfiguration()
         : this(Enumerable.Empty<object>(), new Dictionary<string, object>())
     {
     }
 
-    internal IEnumerable<object> CtorParameterValues { get { return _ctorParameterValues; } }
+    internal IEnumerable<object> CtorParameterValues { get; private set;}
 
-    internal IDictionary<string, object> PropertyValues { get { return _propertyValues; } }
-
-    private AttributeConfiguration(IEnumerable<object> ctorParameterValues, IDictionary<string, object> propertyValues)
-    {
-        _ctorParameterValues = ctorParameterValues;
-        _propertyValues = propertyValues;
-    }
+    internal IDictionary<string, object> PropertyValues { get; private set; }
 
     public AttributeConfiguration CtorValues(params object[] values)
     {
         return new AttributeConfiguration(
-            _ctorParameterValues.Concat(values),
-            _propertyValues);
+            CtorParameterValues.Concat(values),
+            PropertyValues);
     }
 
     public AttributeConfiguration CtorValue(object value)
     {
         return new AttributeConfiguration(
-            _ctorParameterValues.Concat(new[] { value }),
-            _propertyValues);
+            CtorParameterValues.Concat(new[] { value }),
+            PropertyValues);
     }
 
     public AttributeConfiguration Property(string name, object value)
     {
-        _propertyValues.Add(name, value);
+        PropertyValues.Add(name, value);
 
         return new AttributeConfiguration(
-            _ctorParameterValues,
-            _propertyValues);
+            CtorParameterValues,
+            PropertyValues);
     }
 }

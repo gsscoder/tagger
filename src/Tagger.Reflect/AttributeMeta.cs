@@ -3,20 +3,16 @@ using System.Collections.Generic;
 
 sealed class AttributeMeta
 {
-    private readonly Type _attributeType;
-    private readonly IEnumerable<object> _ctorParameterValues;
-    private readonly IDictionary<string, object> _propertyValues;
-
     public AttributeMeta(Type attributeType, AttributeConfiguration configuration)
     {
-        _attributeType = attributeType;
-        _ctorParameterValues = configuration.CtorParameterValues;
-        _propertyValues = configuration.PropertyValues;
+        AttributeType = attributeType;
+        CtorParameterValues = configuration.CtorParameterValues;
+        PropertyValues = configuration.PropertyValues;
     }
 
-    public Type AttributeType { get { return _attributeType; } }
+    public Type AttributeType { get; private set; }
 
-    public IEnumerable<object> CtorParameterValues { get { return _ctorParameterValues; } }
+    public IEnumerable<object> CtorParameterValues { get; private set; }
 
-    public IDictionary<string, object> PropertyValues { get { return _propertyValues; } }
+    public IDictionary<string, object> PropertyValues { get; private set; }
 }
