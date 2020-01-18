@@ -13,6 +13,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>test;mock;api;library</PackageTags>
     <DefineConstants>$(DefineConstants);CSX_MAYBE_INTERNAL;CSX_REM_EITHER_FUNC;CSX_ENUM_INTERNAL;CSX_REM_CRYPTORAND</DefineConstants>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>../../artifacts/Tagger/Debug</OutputPath>
@@ -20,5 +22,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>../../artifacts/Tagger/Release</OutputPath>
   </PropertyGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <None Include="../../assets/icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <Import Project="../../.paket/Paket.Restore.targets" />
 </Project>
