@@ -9,30 +9,30 @@ namespace Tagger.Reflect
 {
     public sealed class Mirror
     {
-        private readonly Maybe<object> template;
-        private readonly IDictionary<string, IEnumerable<AttributeInfo>> attributes;
-        private readonly IEnumerable<Tagger.Reflect.PropertyInfo> properties;
-        private readonly IEnumerable<Type> interfaces; 
+        private readonly Maybe<object> _template;
+        private readonly IDictionary<string, IEnumerable<AttributeInfo>> _attributes;
+        private readonly IEnumerable<Tagger.Reflect.PropertyInfo> _properties;
+        private readonly IEnumerable<Type> _interfaces; 
         private bool built;
         private object newObject;
         
         public Mirror()
         {
-            this.template = Maybe.Nothing<object>();
-            this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
-            this.properties = Enumerable.Empty<Tagger.Reflect.PropertyInfo>();
-            this.interfaces = Enumerable.Empty<Type>();
+            _template = Maybe.Nothing<object>();
+            _attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
+            _properties = Enumerable.Empty<Tagger.Reflect.PropertyInfo>();
+            _interfaces = Enumerable.Empty<Type>();
         }
 
         public Mirror(object template)
         {
             if (template == null) throw new ArgumentNullException(nameof(template));
 
-            this.template = Maybe.Just(template);
-            this.attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
-            this.properties = from p in template.GetType().GetProperties()
+            _template = Maybe.Just(template);
+            _attributes = new Dictionary<string, IEnumerable<AttributeInfo>>();
+            _properties = from p in template.GetType().GetProperties()
                               select new Tagger.Reflect.PropertyInfo(p.Name, p.PropertyType);
-            this.interfaces = Enumerable.Empty<Type>();
+            _interfaces = Enumerable.Empty<Type>();
         }
 
         private Mirror(
@@ -41,10 +41,10 @@ namespace Tagger.Reflect
             IEnumerable<Tagger.Reflect.PropertyInfo> properties,
             IEnumerable<Type> interfaces)
         {
-            this.template = template;
-            this.attributes = attributes;
-            this.properties = properties;
-            this.interfaces = interfaces;
+            _template = template;
+            _attributes = attributes;
+            _properties = properties;
+            _interfaces = interfaces;
         }
 
         public Mirror AddAttribute<T>(string propertyName, AttributeConfiguration configuration)
@@ -53,28 +53,28 @@ namespace Tagger.Reflect
             var info = new AttributeInfo(typeof(T), configuration);
 
             IEnumerable<AttributeInfo> infos;
-            if (attributes.ContainsKey(propertyName)) {
-                infos = attributes[propertyName].Concat(new[] { info });
+            if (_attributes.ContainsKey(propertyName)) {
+                infos = _attributes[propertyName].Concat(new[] { info });
             }
             else {
-                attributes.Add(propertyName, new[] { info });
+                _attributes.Add(propertyName, new[] { info });
             }
 
-            var attrs = new Dictionary<string, IEnumerable<AttributeInfo>>(attributes);
-            return new Mirror(this.template, attrs, this.properties, this.interfaces);
+            var attrs = new Dictionary<string, IEnumerable<AttributeInfo>>(_attributes);
+            return new Mirror(_template, attrs, _properties, _interfaces);
         }
 
         public Mirror Implement<T>()
             where T : class
         {
-            return new Mirror(this.template, this.attributes, this.properties,
-                this.interfaces.Concat(new[] { typeof(T) }));
+            return new Mirror(_template, _attributes, _properties,
+                _interfaces.Concat(new[] { typeof(T) }));
         }
 
         public Mirror AddProperty(string name, Type type)
         {
             var property = new Tagger.Reflect.PropertyInfo(name, type);
-            return new Mirror(this.template, this.attributes, this.properties.Concat(new [] { property }), this.interfaces);
+            return new Mirror(_template, _attributes, _properties.Concat(new [] { property }), _interfaces);
         }
 
         public object Object
@@ -84,7 +84,7 @@ namespace Tagger.Reflect
                 if (built) {
                     return newObject;
                 }
-                var typeName = template.Return(t => t.GetType().Name, GenerateTypeName());
+                var typeName = _template.Return(t => t.GetType().Name, GenerateTypeName());
                 newObject = BuildObject(typeName);
                 built = true;
                 return newObject;
@@ -94,7 +94,7 @@ namespace Tagger.Reflect
         public T Unwrap<T>()
             where T : class
         {
-            return (T)this.Object;
+            return (T)Object;
         }
 
         private object BuildObject(string typeName)
@@ -105,14 +105,14 @@ namespace Tagger.Reflect
             var typeBuilder = moduleBuilder.DefineType(
                 string.Concat("_", typeName, "Mirror"), TypeAttributes.Public);
 
-            this.interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
+            _interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
 
-            foreach(var prop in this.properties) {
-                var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, this.interfaces);
+            foreach(var prop in _properties) {
+                var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, _interfaces);
 
-                if (!attributes.Keys.Contains(prop.Name)) continue;
+                if (!_attributes.Keys.Contains(prop.Name)) continue;
 
-                var attrInfos = attributes[prop.Name];
+                var attrInfos = _attributes[prop.Name];
                 attrInfos.ForEach(info =>
                     {
                         var ctorTypes = (from type in info.CtorParameterValues

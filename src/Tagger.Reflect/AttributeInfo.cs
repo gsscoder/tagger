@@ -5,21 +5,21 @@ namespace Tagger.Reflect
 {
     sealed class AttributeInfo
     {
-        private readonly Type attributeType;
-        private readonly IEnumerable<object> ctorParameterValues;
-        private readonly IDictionary<string, object> propertyValues;
+        private readonly Type _attributeType;
+        private readonly IEnumerable<object> _ctorParameterValues;
+        private readonly IDictionary<string, object> _propertyValues;
 
         public AttributeInfo(Type attributeType, AttributeConfiguration configuration)
         {
-            this.attributeType = attributeType;
-            this.ctorParameterValues = configuration.CtorParameterValues;
-            this.propertyValues = configuration.PropertyValues;
+            _attributeType = attributeType;
+            _ctorParameterValues = configuration.CtorParameterValues;
+            _propertyValues = configuration.PropertyValues;
         }
 
-        public Type AttributeType { get { return attributeType; } }
+        public Type AttributeType { get { return _attributeType; } }
 
-        public IEnumerable<object> CtorParameterValues { get { return ctorParameterValues; } }
+        public IEnumerable<object> CtorParameterValues { get { return _ctorParameterValues; } }
 
-        public IDictionary<string, object> PropertyValues { get { return propertyValues; } }
+        public IDictionary<string, object> PropertyValues { get { return _propertyValues; } }
     }
 }

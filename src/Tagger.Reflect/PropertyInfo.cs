@@ -4,23 +4,23 @@ namespace Tagger.Reflect
 {
     sealed class PropertyInfo
     {
-        private readonly string name;
-        private readonly Type type;
+        private readonly string _name;
+        private readonly Type _type;
 
         public PropertyInfo(string name, Type type)
         {
-            this.name = name;
-            this.type = type;
+            this._name = name;
+            this._type = type;
         }
 
         public string Name
         {
-            get { return name; }
+            get { return _name; }
         }
 
         public Type Type
         {
-            get { return type; }
+            get { return _type; }
         }
     }
 }

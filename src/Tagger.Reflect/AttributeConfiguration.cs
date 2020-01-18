@@ -5,45 +5,45 @@ namespace Tagger.Reflect
 {
     public class AttributeConfiguration
     {
-        private readonly IEnumerable<object> ctorParameterValues;
-        private readonly IDictionary<string, object> propertyValues;
+        private readonly IEnumerable<object> _ctorParameterValues;
+        private readonly IDictionary<string, object> _propertyValues;
 
         public AttributeConfiguration()
             : this(Enumerable.Empty<object>(), new Dictionary<string, object>())
         {
         }
 
-        internal IEnumerable<object> CtorParameterValues { get { return ctorParameterValues; } }
+        internal IEnumerable<object> CtorParameterValues { get { return _ctorParameterValues; } }
 
-        internal IDictionary<string, object> PropertyValues { get { return propertyValues; } }
+        internal IDictionary<string, object> PropertyValues { get { return _propertyValues; } }
 
         private AttributeConfiguration(IEnumerable<object> ctorParameterValues, IDictionary<string, object> propertyValues)
         {
-            this.ctorParameterValues = ctorParameterValues;
-            this.propertyValues = propertyValues;
+            _ctorParameterValues = ctorParameterValues;
+            _propertyValues = propertyValues;
         }
 
         public AttributeConfiguration CtorValues(params object[] values)
         {
             return new AttributeConfiguration(
-                this.ctorParameterValues.Concat(values),
-                this.propertyValues);
+                _ctorParameterValues.Concat(values),
+                _propertyValues);
         }
 
         public AttributeConfiguration CtorValue(object value)
         {
             return new AttributeConfiguration(
-                this.ctorParameterValues.Concat(new[] { value }),
-                this.propertyValues);
+                _ctorParameterValues.Concat(new[] { value }),
+                _propertyValues);
         }
 
         public AttributeConfiguration Property(string name, object value)
         {
-            this.propertyValues.Add(name, value);
+            _propertyValues.Add(name, value);
 
             return new AttributeConfiguration(
-                this.ctorParameterValues,
-                this.propertyValues);
+                _ctorParameterValues,
+                _propertyValues);
         }
     }
 }
