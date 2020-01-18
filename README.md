@@ -14,7 +14,7 @@ I initially designed this library for writing tests for [Command Line Parser Lib
 ## Install via NuGet
 
 ```sh
-$ dotnet add package Tagger.Reflect --version 1.0.0
+$ dotnet add package Tagger.Reflect --version 1.0.2
 ```
 
 ## At a glance

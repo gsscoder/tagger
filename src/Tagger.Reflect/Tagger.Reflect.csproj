@@ -5,7 +5,7 @@
     <TargetFrameworks>netstandard2.0;net45;net461</TargetFrameworks>
     <Title>.NET library to mock object properties with attributes</Title>
     <Description>.NET library to mock object properties with attributes</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>gsscoder</Authors>
     <Copyright>Copyright © Giacomo Stelluti Scala, 2015-2020</Copyright>
     <PackageProjectUrl>https://github.com/gsscoder/tagger</PackageProjectUrl>
