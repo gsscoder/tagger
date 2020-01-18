@@ -15,7 +15,7 @@ public sealed class Mirror
 
     public Mirror(object template)
     {
-        if (template == null) throw new ArgumentNullException(nameof(template));
+        Guard.AgainstNull(nameof(template), template);
 
         _metadata = new Metadata(
             Maybe.Just(template),
