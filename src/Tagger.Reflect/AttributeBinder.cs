@@ -10,6 +10,9 @@ public sealed class AttributeBinder
 
     public AttributeBinder InProperty(string name)
     {
+        Guard.AgainstNull(nameof(name), name);
+        Guard.AgainstEmptyWhiteSpace(nameof(name), name);
+
         PropertyName = name;
         return this;
     }
@@ -32,6 +35,9 @@ public sealed class AttributeBinder
 
     public AttributeBinder WithPropertyValue(string name, object value)
     {
+        Guard.AgainstNull(nameof(name), name);
+        Guard.AgainstEmptyWhiteSpace(nameof(name), name);
+
          if (PropertyName == null) throw new InvalidOperationException();
 
          PropertyValues.Add(name, value);

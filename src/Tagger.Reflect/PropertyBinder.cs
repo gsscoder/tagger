@@ -4,6 +4,9 @@ public sealed class PropertyBinder
 {
     public PropertyBinder Property(string name)
     {
+        Guard.AgainstNull(nameof(name), name);
+        Guard.AgainstEmptyWhiteSpace(nameof(name), name);
+
         Name = name;
         return this;
     }
