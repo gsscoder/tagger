@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using CSharpx;
-using Tagger.Reflect.Internal;
 
 namespace Tagger.Reflect
 {
