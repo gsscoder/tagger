@@ -70,10 +70,12 @@ public sealed class Mirror
             if (_built) {
                 return _object;
             }
-            var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
-            _object = BuildObject(typeName);
-            _built = true;
-            return _object;
+            lock (this) {
+                var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
+                _object = BuildObject(typeName);
+                _built = true;
+                return _object;
+            }
         }
     }
 
