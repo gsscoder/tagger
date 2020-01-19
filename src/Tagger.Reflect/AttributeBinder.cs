@@ -1,65 +1,68 @@
 using System;
 using System.Collections.Generic;
 
-public sealed class AttributeBinder
+namespace Tagger
 {
-    public AttributeBinder()
+    public sealed class AttributeBinder
     {
-        PropertyValues = new Dictionary<string, object>();
-    }
+        public AttributeBinder()
+        {
+            PropertyValues = new Dictionary<string, object>();
+        }
 
-    public AttributeBinder InProperty(string name)
-    {
-        Guard.AgainstNull(nameof(name), name);
-        Guard.AgainstEmptyWhiteSpace(nameof(name), name);
+        public AttributeBinder InProperty(string name)
+        {
+            Guard.AgainstNull(nameof(name), name);
+            Guard.AgainstEmptyWhiteSpace(nameof(name), name);
 
-        PropertyName = name;
-        return this;
-    }
+            PropertyName = name;
+            return this;
+        }
 
-    public AttributeBinder DefineType<T>()
-    {
-        if (PropertyName == null) throw new InvalidOperationException();
+        public AttributeBinder DefineType<T>()
+        {
+            if (PropertyName == null) throw new InvalidOperationException();
 
-        Type = typeof(T);
-        return this;
-    }
+            Type = typeof(T);
+            return this;
+        }
 
-    public AttributeBinder WithCtorParameters(params object[] values)
-    {
-        if (PropertyName == null) throw new InvalidOperationException();
+        public AttributeBinder WithCtorParameters(params object[] values)
+        {
+            if (PropertyName == null) throw new InvalidOperationException();
 
-        CtorParameters = values;
-        return this;
-    }
+            CtorParameters = values;
+            return this;
+        }
 
-    public AttributeBinder WithPropertyValue(string name, object value)
-    {
-        Guard.AgainstNull(nameof(name), name);
-        Guard.AgainstEmptyWhiteSpace(nameof(name), name);
+        public AttributeBinder WithPropertyValue(string name, object value)
+        {
+            Guard.AgainstNull(nameof(name), name);
+            Guard.AgainstEmptyWhiteSpace(nameof(name), name);
 
-         if (PropertyName == null) throw new InvalidOperationException();
+            if (PropertyName == null) throw new InvalidOperationException();
 
-         PropertyValues.Add(name, value);
-         return this;
-    }
+            PropertyValues.Add(name, value);
+            return this;
+        }
 
-    internal string PropertyName { get; private set; }
+        internal string PropertyName { get; private set; }
 
-    internal Type Type { get; private set; }
+        internal Type Type { get; private set; }
 
-    internal object[] CtorParameters { get; private set; }
+        internal object[] CtorParameters { get; private set; }
 
-    internal IDictionary<string, object> PropertyValues { get; private set; }
+        internal IDictionary<string, object> PropertyValues { get; private set; }
 
-    internal AttributeMeta ToAttributeMeta()
-    {
-        if (PropertyName == null || Type == null) throw new InvalidOperationException();
+        internal AttributeMeta ToAttributeMeta()
+        {
+            if (PropertyName == null || Type == null) throw new InvalidOperationException();
 
-        return new AttributeMeta(
-            PropertyName,
-            Type,
-            CtorParameters,
-            PropertyValues);
+            return new AttributeMeta(
+                PropertyName,
+                Type,
+                CtorParameters,
+                PropertyValues);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
+using Tagger;
 
 public class MirrorTests
 {
