@@ -158,5 +158,23 @@ public class MirrorTests
             
             sut.Object.GetType().SingleAttribute<BarAttribute>("Foo").Should().Be(expected);
         }
+
+        [Theory]
+        [InlineData("foo bar baz")]
+        [InlineData("bar foo baz")]
+        [InlineData("baz baz foo")]
+        public void Should_add_attribute_using_only_constructor(string value)
+        {
+            var expected = new FooAttribute(value);
+            var anonymous = new { FooString = default(string), BarInt32 = default(int), BazBoolean = default(bool) };
+
+            var sut = new Mirror(anonymous)
+                            .Implement<IFoo>()
+                            .Add(x => x.InProperty("FooString")
+                                       .DefineType<FooAttribute>()
+                                       .WithCtorParameters(value));
+            
+            sut.Object.GetType().SingleAttribute<FooAttribute>("FooString").Should().Be(expected);
+        }
     }
 }
