@@ -16,6 +16,7 @@ I initially designed this library for writing tests for [Command Line Parser Lib
 ```sh
 $ dotnet add package Tagger.Reflect --version 1.5.3-alpha
 ```
+The latest stable version is [1.0.3](https://github.com/gsscoder/tagger/tree/v1.0.3).
 
 ## At a glance
 
