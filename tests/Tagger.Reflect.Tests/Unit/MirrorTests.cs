@@ -141,5 +141,22 @@ public class MirrorTests
             action.Should().ThrowExactly<ArgumentException>()
                 .WithMessage("T must be an interface type");
         }
+
+        [Theory]
+        [InlineData(0.99321)]
+        [InlineData(9.66123)]
+        [InlineData(1.23456)]
+        public void Should_add_attribute_using_only_properties(double value)
+        {
+            var expected = new BarAttribute() { Value = value };
+
+            var sut = new Mirror(new { Foo = default(string) })
+                            .Implement<IBar>()
+                            .Add(x => x.InProperty("Foo")
+                                       .DefineType<BarAttribute>()
+                                       .WithPropertyValue("Value", value));
+            
+            sut.Object.GetType().SingleAttribute<BarAttribute>("Foo").Should().Be(expected);
+        }
     }
 }

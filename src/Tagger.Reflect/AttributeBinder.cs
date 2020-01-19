@@ -8,6 +8,7 @@ namespace Tagger
         public AttributeBinder()
         {
             PropertyValues = new Dictionary<string, object>();
+            CtorParameters = new object[] {};
         }
 
         public AttributeBinder InProperty(string name)
