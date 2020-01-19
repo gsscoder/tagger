@@ -21,6 +21,7 @@ namespace Tagger
         }
 
         public AttributeBinder DefineType<T>()
+            where T : Attribute
         {
             if (PropertyName == null) throw new InvalidOperationException();
 
