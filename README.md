@@ -25,7 +25,7 @@ var mirror = new Mirror(new {
 	Foo = default(string), Bar = default(int), Baz = default(bool) })
   .Implement<IMyInterface>()
   .Add(x => x.ForProperty(propertyName)
-                .DefineType<MyAttribute>()
+                .Define<MyAttribute>()
                 .WithCtorParameters("ctor")
                 .WithPropertyValue("AttrProp", "value"));
 

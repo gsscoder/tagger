@@ -20,7 +20,7 @@ namespace Tagger
             return this;
         }
 
-        public AttributeBinder DefineType<T>()
+        public AttributeBinder Define<T>()
             where T : Attribute
         {
             if (PropertyName == null) throw new InvalidOperationException();

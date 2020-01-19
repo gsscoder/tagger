@@ -16,7 +16,7 @@ public class MirrorTests
             var expected = new FooAttribute(ctorValue);
 
             var sut = new Mirror(new Foo()).Add(x =>
-                x.ForProperty(propertyName).DefineType<FooAttribute>().WithCtorParameters(ctorValue));
+                x.ForProperty(propertyName).Define<FooAttribute>().WithCtorParameters(ctorValue));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -34,7 +34,7 @@ public class MirrorTests
 
             var sut = new Mirror(new Foo()).Add(x =>
                 x.ForProperty(propertyName)
-                    .DefineType<FooAttribute>()
+                    .Define<FooAttribute>()
                     .WithCtorParameters(ctorValue)
                     .WithPropertyValue("Value", memberData));
 
@@ -55,7 +55,7 @@ public class MirrorTests
 
             var sut = new Mirror(anonymous).Add(x =>
                 x.ForProperty(propertyName)
-                    .DefineType<FooAttribute>()
+                    .Define<FooAttribute>()
                     .WithCtorParameters(ctorValue)
                     .WithPropertyValue("Value", memberData));
 
@@ -153,7 +153,7 @@ public class MirrorTests
             var sut = new Mirror(new { Foo = default(string) })
                             .Implement<IBar>()
                             .Add(x => x.ForProperty("Foo")
-                                       .DefineType<BarAttribute>()
+                                       .Define<BarAttribute>()
                                        .WithPropertyValue("Value", value));
             
             sut.Object.GetType().SingleAttribute<BarAttribute>("Foo").Should().Be(expected);
@@ -171,7 +171,7 @@ public class MirrorTests
             var sut = new Mirror(anonymous)
                             .Implement<IFoo>()
                             .Add(x => x.ForProperty("FooString")
-                                       .DefineType<FooAttribute>()
+                                       .Define<FooAttribute>()
                                        .WithCtorParameters(value));
             
             sut.Object.GetType().SingleAttribute<FooAttribute>("FooString").Should().Be(expected);
