@@ -11,7 +11,7 @@ namespace Tagger
             CtorParameters = new object[] {};
         }
 
-        public AttributeBinder InProperty(string name)
+        public AttributeBinder ForProperty(string name)
         {
             Guard.AgainstNull(nameof(name), name);
             Guard.AgainstEmptyWhiteSpace(nameof(name), name);

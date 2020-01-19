@@ -16,7 +16,7 @@ public class MirrorTests
             var expected = new FooAttribute(ctorValue);
 
             var sut = new Mirror(new Foo()).Add(x =>
-                x.InProperty(propertyName).DefineType<FooAttribute>().WithCtorParameters(ctorValue));
+                x.ForProperty(propertyName).DefineType<FooAttribute>().WithCtorParameters(ctorValue));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -33,7 +33,7 @@ public class MirrorTests
             var expected = new FooAttribute(ctorValue) { Value = memberData };
 
             var sut = new Mirror(new Foo()).Add(x =>
-                x.InProperty(propertyName)
+                x.ForProperty(propertyName)
                     .DefineType<FooAttribute>()
                     .WithCtorParameters(ctorValue)
                     .WithPropertyValue("Value", memberData));
@@ -54,7 +54,7 @@ public class MirrorTests
             var anonymous = new { FooString = default(string), BarInt32 = default(int), BazBoolean = default(bool) };
 
             var sut = new Mirror(anonymous).Add(x =>
-                x.InProperty(propertyName)
+                x.ForProperty(propertyName)
                     .DefineType<FooAttribute>()
                     .WithCtorParameters(ctorValue)
                     .WithPropertyValue("Value", memberData));
@@ -152,7 +152,7 @@ public class MirrorTests
 
             var sut = new Mirror(new { Foo = default(string) })
                             .Implement<IBar>()
-                            .Add(x => x.InProperty("Foo")
+                            .Add(x => x.ForProperty("Foo")
                                        .DefineType<BarAttribute>()
                                        .WithPropertyValue("Value", value));
             
@@ -170,7 +170,7 @@ public class MirrorTests
 
             var sut = new Mirror(anonymous)
                             .Implement<IFoo>()
-                            .Add(x => x.InProperty("FooString")
+                            .Add(x => x.ForProperty("FooString")
                                        .DefineType<FooAttribute>()
                                        .WithCtorParameters(value));
             

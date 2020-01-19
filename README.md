@@ -24,7 +24,7 @@ The latest stable version is [1.0.3](https://github.com/gsscoder/tagger/tree/v1.
 var mirror = new Mirror(new {
 	Foo = default(string), Bar = default(int), Baz = default(bool) })
   .Implement<IMyInterface>()
-  .Add(x => x.InProperty(propertyName)
+  .Add(x => x.ForProperty(propertyName)
                 .DefineType<MyAttribute>()
                 .WithCtorParameters("ctor")
                 .WithPropertyValue("AttrProp", "value"));
