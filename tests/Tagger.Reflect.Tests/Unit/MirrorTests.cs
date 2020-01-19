@@ -36,7 +36,7 @@ public class MirrorTests
                 x.ForProperty(propertyName)
                     .Define<FooAttribute>()
                     .CtorValues(ctorValue)
-                    .WithPropertyValue("Value", memberData));
+                    .PropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -57,7 +57,7 @@ public class MirrorTests
                 x.ForProperty(propertyName)
                     .Define<FooAttribute>()
                     .CtorValues(ctorValue)
-                    .WithPropertyValue("Value", memberData));
+                    .PropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -154,7 +154,7 @@ public class MirrorTests
                             .Implement<IBar>()
                             .Add(x => x.ForProperty("Foo")
                                        .Define<BarAttribute>()
-                                       .WithPropertyValue("Value", value));
+                                       .PropertyValue("Value", value));
             
             sut.Object.GetType().SingleAttribute<BarAttribute>("Foo").Should().Be(expected);
         }

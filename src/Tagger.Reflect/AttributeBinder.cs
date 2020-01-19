@@ -37,7 +37,7 @@ namespace Tagger
             return this;
         }
 
-        public AttributeBinder WithPropertyValue(string name, object value)
+        public AttributeBinder PropertyValue(string name, object value)
         {
             Guard.AgainstNull(nameof(name), name);
             Guard.AgainstEmptyWhiteSpace(nameof(name), name);

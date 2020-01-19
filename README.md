@@ -27,7 +27,7 @@ var mirror = new Mirror(new {
   .Add(x => x.ForProperty(propertyName)
                 .Define<MyAttribute>()
                 .CtorValues("ctor")
-                .WithPropertyValue("AttrProp", "value"));
+                .PropertyValue("AttrProp", "value"));
 
 var instance = mirror.Unwrap<IMyInterface>();
 
