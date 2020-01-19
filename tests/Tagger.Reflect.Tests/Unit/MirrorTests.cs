@@ -16,7 +16,7 @@ public class MirrorTests
             var expected = new FooAttribute(ctorValue);
 
             var sut = new Mirror(new Foo()).Add(x =>
-                x.ForProperty(propertyName).Define<FooAttribute>().WithCtorParameters(ctorValue));
+                x.ForProperty(propertyName).Define<FooAttribute>().CtorValues(ctorValue));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -35,7 +35,7 @@ public class MirrorTests
             var sut = new Mirror(new Foo()).Add(x =>
                 x.ForProperty(propertyName)
                     .Define<FooAttribute>()
-                    .WithCtorParameters(ctorValue)
+                    .CtorValues(ctorValue)
                     .WithPropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
@@ -56,7 +56,7 @@ public class MirrorTests
             var sut = new Mirror(anonymous).Add(x =>
                 x.ForProperty(propertyName)
                     .Define<FooAttribute>()
-                    .WithCtorParameters(ctorValue)
+                    .CtorValues(ctorValue)
                     .WithPropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
@@ -172,7 +172,7 @@ public class MirrorTests
                             .Implement<IFoo>()
                             .Add(x => x.ForProperty("FooString")
                                        .Define<FooAttribute>()
-                                       .WithCtorParameters(value));
+                                       .CtorValues(value));
             
             sut.Object.GetType().SingleAttribute<FooAttribute>("FooString").Should().Be(expected);
         }

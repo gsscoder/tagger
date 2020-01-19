@@ -29,7 +29,7 @@ namespace Tagger
             return this;
         }
 
-        public AttributeBinder WithCtorParameters(params object[] values)
+        public AttributeBinder CtorValues(params object[] values)
         {
             if (PropertyName == null) throw new InvalidOperationException();
 

@@ -26,7 +26,7 @@ var mirror = new Mirror(new {
   .Implement<IMyInterface>()
   .Add(x => x.ForProperty(propertyName)
                 .Define<MyAttribute>()
-                .WithCtorParameters("ctor")
+                .CtorValues("ctor")
                 .WithPropertyValue("AttrProp", "value"));
 
 var instance = mirror.Unwrap<IMyInterface>();
