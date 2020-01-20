@@ -21,22 +21,29 @@ The latest stable version is [1.0.3](https://github.com/gsscoder/tagger/tree/v1.
 ## At a glance
 
 ```csharp
-var mirror = new Mirror(new {
-	Foo = default(string), Bar = default(int), Baz = default(bool) })
-  .Implement<IMyInterface>()
-  .Add(x => x.ForProperty(propertyName)
-                .Define<MyAttribute>()
-                .CtorValues("ctor")
-                .PropertyValue("AttrProp", "value"));
+interface IMyInterface
+{
+  string Foo { get; set; }
+  int Bar { get; set; }
+  bool Baz { get; set; }
+}
+
+// define an anonymous template limited to target properties
+var mirror = new Mirror(new { Foo = default(string) })
+    .Implement<IMyInterface>()
+    .Add(x => x.ForProperty(propertyName)
+               .Define<MyAttribute>()
+               .CtorValues("ctor")
+               .PropertyValue("AttrProp", "value"));
 
 var instance = mirror.Unwrap<IMyInterface>();
 
 // instance layout:
 // class anonymous : IMyInterface {
-// ...
+//     ...
 //     [MyAttribute("ctor", AttrProp = "value")]
 //     public string Foo { get; set; } 
-// ...
+//     ...
 // }
 ```
 

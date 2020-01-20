@@ -9,7 +9,7 @@ namespace Tagger
 {
     public sealed class Mirror
     {
-        private readonly Metadata _metadata = new Metadata();
+        private Metadata _metadata = new Metadata();
         private bool _built;
         private object _object;
         
@@ -102,6 +102,12 @@ namespace Tagger
 
             _metadata.Interfaces.ForEach(@interface => typeBuilder.AddInterfaceImplementation(@interface));
 
+            var props = (from @interface in _metadata.Interfaces
+                         select @interface.GetProperties(
+                             from meta in _metadata.Properties
+                             select meta.Name)).SelectMany(p => p).Memoize();
+            _metadata = _metadata.WithProperties(_metadata.Properties.Concat(props));
+
             foreach(var prop in _metadata.Properties) {
                 var propBuilder = typeBuilder.BuildProperty(prop.Name, prop.Type, _metadata.Interfaces);
 
@@ -111,7 +117,7 @@ namespace Tagger
                 attrInfos.ForEach(info =>
                     {
                         var ctorTypes = (from type in info.CtorParameters
-                                            select type.GetType()).ToArray();
+                                         select type.GetType()).ToArray();
                         var ctorInfo = info.AttributeType.GetConstructor(ctorTypes);
 
                         if (!info.PropertyValues.Any()) {

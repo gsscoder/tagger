@@ -176,5 +176,15 @@ public class MirrorTests
             
             sut.Object.GetType().SingleAttribute<FooAttribute>("FooString").Should().Be(expected);
         }
+
+        [Fact]
+        public void Should_automatically_implement_all_interface_props_with_partial_anon_type()
+        {
+            var sut = new Mirror(new { FooString = default(string) })
+                            .Implement<IFoo>();
+
+            sut.Object.Should().NotBeNull()
+                .And.BeAssignableTo<IFoo>();
+        }
     }
 }

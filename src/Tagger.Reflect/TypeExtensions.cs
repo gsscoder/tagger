@@ -27,4 +27,13 @@ static class TypeExtensions
             select m;
         return allMethods.Single(m => m.Name.Equals(string.Concat("set_", propertyName)));
     }
+
+    public static IEnumerable<PropertyMeta> GetProperties(this Type type, IEnumerable<string> excluded)
+    {
+        return (from p in type.GetProperties()
+                where p.CanRead &&
+                      p.CanWrite &&
+                      !excluded.Contains(p.Name)
+                select new PropertyMeta(p.Name, p.PropertyType));
+    }
 }
