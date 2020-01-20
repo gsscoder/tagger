@@ -57,7 +57,7 @@ namespace Tagger
 
         internal List<object> PropertyLayouts { get; private set; }
 
-        internal AttributeMeta ToAttributeMeta()
+        internal AttributeMeta ToMetadata()
         {
             if (PropertyName == null || Type == null) throw new InvalidOperationException();
 

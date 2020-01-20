@@ -47,7 +47,7 @@ namespace Tagger
 
             var config = new AttributeBinder();
             binder(config);
-            var meta = config.ToAttributeMeta();
+            var meta = config.ToMetadata();
 
             if (_metadata.Attributes.ContainsKey(meta.PropertyName)) {
                 _metadata.Attributes[meta.PropertyName] = _metadata.Attributes[meta.PropertyName].Concat(new[] { meta });
@@ -67,7 +67,7 @@ namespace Tagger
 
             return new Mirror(
                 _metadata.WithProperties(
-                    _metadata.Properties.Concat(new[] { config.ToPropertyMeta() })));
+                    _metadata.Properties.Concat(new[] { config.ToMetadata() })));
         }
 
         public T Unwrap<T>()

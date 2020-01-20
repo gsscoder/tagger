@@ -35,7 +35,7 @@ namespace Tagger
 
         internal Type Type { get; private set; }
 
-        internal PropertyMeta ToPropertyMeta()
+        internal PropertyMeta ToMetadata()
         {
             if (Name == null || Type == null) throw new InvalidOperationException();
 
