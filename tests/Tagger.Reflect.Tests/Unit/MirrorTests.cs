@@ -20,8 +20,7 @@ public class MirrorTests
                                     .Define<FooAttribute>()
                                     .AttributeCtor(new { name = value }));
 
-        sut.Object.GetType().SingleAttribute<FooAttribute>("Baz")
-            .Should().Be(expected);
+        sut.Object.InspectAttribute<FooAttribute>("Baz").Should().Be(expected);
     }
 
     [Theory]
@@ -41,8 +40,7 @@ public class MirrorTests
                            .AttributeCtor(new { name = ctorValue })
                            .AttributeProperty(new { Value = propValue }));
                                     
-        sut.Object.GetType().SingleAttribute<FooAttribute>("Baz")
-            .Should().Be(expected);
+        sut.Object.InspectAttribute<FooAttribute>("Baz").Should().Be(expected);
     }
 
     [Theory]
@@ -65,8 +63,7 @@ public class MirrorTests
 
         Action action = () => sut.Implement<Baz>();
 
-        action.Should().ThrowExactly<ArgumentException>()
-            .WithMessage("T must be an interface type");
+        action.Should().ThrowExactly<ArgumentException>().WithMessage("T must be an interface type");
     }
 
     [Theory]
@@ -84,8 +81,7 @@ public class MirrorTests
                                .Define<BarAttribute>()
                                .AttributeProperty(new { Value = value }));
         
-        sut.Object.GetType().SingleAttribute<BarAttribute>("Baz")
-            .Should().Be(expected);
+        sut.Object.InspectAttribute<BarAttribute>("Baz").Should().Be(expected);
     }
 
     [Theory]
@@ -102,8 +98,7 @@ public class MirrorTests
                                    .Define<FooAttribute>()
                                    .AttributeCtor(new { name = value }));
         
-        sut.Object.GetType().SingleAttribute<FooAttribute>("Baz")
-            .Should().Be(expected);
+        sut.Object.InspectAttribute<FooAttribute>("Baz").Should().Be(expected);
     }
 
     [Fact]
@@ -113,8 +108,7 @@ public class MirrorTests
                         new { Foo = default(string), Bar = default(int) })
                         .Implement<IFoo>();
 
-        sut.Object.Should().NotBeNull()
-            .And.BeAssignableTo<IFoo>();
+        sut.Object.Should().NotBeNull().And.BeAssignableTo<IFoo>();
     }
 
     [Fact]
@@ -142,8 +136,7 @@ public class MirrorTests
                            .Define<BazAttribute>()
                            .AttributeProperty(new { Value = value }));
 
-        sut.Object.GetType().SingleAttribute<BazAttribute>("Foo")
-            .Should().Be(expected);
+        sut.Object.InspectAttribute<BazAttribute>("Foo").Should().Be(expected);
     }
 
     [Theory]
@@ -160,7 +153,6 @@ public class MirrorTests
                            .Define<BazAttribute>()
                            .AttributeCtor(new { value = value }));
 
-        sut.Object.GetType().SingleAttribute<BazAttribute>("Bar")
-            .Should().Be(expected);
+        sut.Object.InspectAttribute<BazAttribute>("Bar").Should().Be(expected);
     }
 }
