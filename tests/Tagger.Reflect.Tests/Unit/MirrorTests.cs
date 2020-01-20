@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using FluentAssertions;
 using Tagger;
@@ -100,7 +102,8 @@ public class MirrorTests
                                    .Define<FooAttribute>()
                                    .AttributeCtor(new { name = value }));
         
-        sut.Object.GetType().SingleAttribute<FooAttribute>("Baz").Should().Be(expected);
+        sut.Object.GetType().SingleAttribute<FooAttribute>("Baz")
+            .Should().Be(expected);
     }
 
     [Fact]
@@ -123,5 +126,23 @@ public class MirrorTests
 
         sut.Object.Should().NotBeNull()
             .And.BeAssignableTo<IFoo>();
+    }
+
+    [Theory]
+    [InlineData(new double[] { 0.99321, 9.66123, 1.23456 })]
+    [InlineData(new double[] { 9.66123, 0.99321, 1.23456 })]
+    [InlineData(new double[] { 1.23456, 0.99321, 9.66123 })]
+    public void Should_handle_attribute_with_array_property(double[] value)
+    {
+        var expected = new BazAttribute() { Value = value };
+
+        var sut = new Mirror(
+            new { Foo = default(object) })
+                .Add(x => x.ForProperty("Foo")
+                           .Define<BazAttribute>()
+                           .AttributeProperty(new { Value = value }));
+
+        sut.Object.GetType().SingleAttribute<BazAttribute>("Foo")
+            .Should().Be(expected);
     }
 }

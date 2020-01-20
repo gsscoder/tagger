@@ -55,6 +55,8 @@ See this [unit test](https://github.com/gsscoder/tagger/blob/master/tests/Tagger
 ## Latest Changes
 
 - New fluent interface.
+- Tests refactoring.
+- New tests.
 
 ## Icon
 
