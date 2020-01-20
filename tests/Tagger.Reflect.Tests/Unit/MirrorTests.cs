@@ -15,8 +15,10 @@ public class MirrorTests
         {
             var expected = new FooAttribute(ctorValue);
 
-            var sut = new Mirror(new Foo()).Add(x =>
-                x.ForProperty(propertyName).Define<FooAttribute>().CtorValues(ctorValue));
+            var sut = new Mirror(
+                new Foo()).Add(x => x.ForProperty(propertyName)
+                                     .Define<FooAttribute>()
+                                     .CtorValues(ctorValue));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -32,11 +34,11 @@ public class MirrorTests
         {
             var expected = new FooAttribute(ctorValue) { Value = memberData };
 
-            var sut = new Mirror(new Foo()).Add(x =>
-                x.ForProperty(propertyName)
-                    .Define<FooAttribute>()
-                    .CtorValues(ctorValue)
-                    .PropertyValue("Value", memberData));
+            var sut = new Mirror(
+                new Foo()).Add(x => x.ForProperty(propertyName)
+                                     .Define<FooAttribute>()
+                                     .CtorValues(ctorValue)
+                                     .PropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -53,11 +55,10 @@ public class MirrorTests
             var expected = new FooAttribute(ctorValue) { Value = memberData };
             var anonymous = new { FooString = default(string), BarInt32 = default(int), BazBoolean = default(bool) };
 
-            var sut = new Mirror(anonymous).Add(x =>
-                x.ForProperty(propertyName)
-                    .Define<FooAttribute>()
-                    .CtorValues(ctorValue)
-                    .PropertyValue("Value", memberData));
+            var sut = new Mirror(anonymous).Add(x => x.ForProperty(propertyName)
+                                                      .Define<FooAttribute>()
+                                                      .CtorValues(ctorValue)
+                                                      .PropertyValue("Value", memberData));
 
             sut.Object.GetType().SingleAttribute<FooAttribute>(propertyName).Should().Be(expected);
         }
@@ -71,7 +72,8 @@ public class MirrorTests
         [InlineData("DynamicLong", typeof(long))]
         public void Add_property_to_new_object_returns_object_with_new_property(string propertyName, Type propertyType)
         {
-            var sut = new Mirror().Add(x => x.Property(propertyName).OfType(propertyType));
+            var sut = new Mirror().Add(x => x.Property(propertyName)
+                                             .OfType(propertyType));
 
             sut.Object.GetType().GetProperties().Should().Contain(
                 p => p.Name.Equals(propertyName) && p.PropertyType == propertyType);
@@ -150,11 +152,12 @@ public class MirrorTests
         {
             var expected = new BarAttribute() { Value = value };
 
-            var sut = new Mirror(new { Foo = default(string) })
-                            .Implement<IBar>()
-                            .Add(x => x.ForProperty("Foo")
-                                       .Define<BarAttribute>()
-                                       .PropertyValue("Value", value));
+            var sut = new Mirror(
+                        new { Foo = default(string) })
+                        .Implement<IBar>()
+                        .Add(x => x.ForProperty("Foo")
+                                   .Define<BarAttribute>()
+                                   .PropertyValue("Value", value));
             
             sut.Object.GetType().SingleAttribute<BarAttribute>("Foo").Should().Be(expected);
         }
@@ -180,7 +183,8 @@ public class MirrorTests
         [Fact]
         public void Should_automatically_implement_all_interface_props_with_partial_anon_type()
         {
-            var sut = new Mirror(new { FooString = default(string) })
+            var sut = new Mirror(
+                            new { FooString = default(string) })
                             .Implement<IFoo>();
 
             sut.Object.Should().NotBeNull()
