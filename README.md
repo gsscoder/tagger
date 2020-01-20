@@ -31,7 +31,7 @@ interface IMyInterface
 // define an anonymous template limited to target properties
 var mirror = new Mirror(new { Foo = default(string) })
     .Implement<IMyInterface>()
-    .Add(x => x.ForProperty(propertyName)
+    .Add(x => x.ForProperty("Foo")
                .Define<MyAttribute>()
                .AttributeCtor(new { index = 0 })
                // define an anonymous instance for each attribute
