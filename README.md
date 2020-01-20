@@ -23,9 +23,9 @@ The latest stable version is [1.0.3](https://github.com/gsscoder/tagger/tree/v1.
 ```csharp
 interface IMyInterface
 {
-  string Foo { get; set; }
-  int Bar { get; set; }
-  bool Baz { get; set; }
+    string Foo { get; set; }
+    int Bar { get; set; }
+    bool Baz { get; set; }
 }
 
 // define an anonymous template limited to target properties
