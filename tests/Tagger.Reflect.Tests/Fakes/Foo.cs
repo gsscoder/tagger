@@ -1,8 +1,6 @@
 ﻿public class Foo
 {
-    public string FooString { get; set; }
+    public string Baz { get; set; }
 
-    public int BarInt32 { get; set; }
-
-    public bool BazBoolean { get; set; }
+    public int Bar { get; set; }
 }

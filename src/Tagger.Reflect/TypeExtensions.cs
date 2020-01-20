@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 static class TypeExtensions
 {
@@ -35,5 +36,19 @@ static class TypeExtensions
                       p.CanWrite &&
                       !excluded.Contains(p.Name)
                 select new PropertyMeta(p.Name, p.PropertyType));
+    }
+
+    public static Boolean IsAnonymous(this Type type)
+    {
+        if (!type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any()) {
+            return false;
+        }
+        var name = type.Name;
+        if (name.Length < 3) {
+            return false;
+        }
+        return name[0] == '<'  &&
+               name[1] == '>'  &&
+               name.IndexOf("AnonymousType", StringComparison.Ordinal) > 0;
     }
 }

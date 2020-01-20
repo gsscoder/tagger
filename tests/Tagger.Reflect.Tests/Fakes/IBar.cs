@@ -1,4 +1,4 @@
 public interface IBar
 {
-    string Foo { get; set; }
+    string Baz { get; set; }
 }

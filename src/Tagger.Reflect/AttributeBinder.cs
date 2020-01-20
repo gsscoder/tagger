@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Tagger
@@ -7,8 +8,7 @@ namespace Tagger
     {
         public AttributeBinder()
         {
-            PropertyValues = new Dictionary<string, object>();
-            CtorParameters = new object[] {};
+            PropertyLayouts = new List<object>();
         }
 
         public AttributeBinder ForProperty(string name)
@@ -29,22 +29,23 @@ namespace Tagger
             return this;
         }
 
-        public AttributeBinder CtorValues(params object[] values)
+        public AttributeBinder AttributeCtor(object paramsAsAnonymous)
         {
-            if (PropertyName == null) throw new InvalidOperationException();
+            Guard.AgainstExceptAnonymous("paramsAsAnonymous", paramsAsAnonymous);
 
-            CtorParameters = values;
+            CtorLayout = paramsAsAnonymous;
             return this;
         }
 
-        public AttributeBinder PropertyValue(string name, object value)
+        public AttributeBinder AttributeProperty(object propAsAnonymous)
         {
-            Guard.AgainstNull(nameof(name), name);
-            Guard.AgainstEmptyWhiteSpace(nameof(name), name);
+            Guard.AgainstExceptAnonymous("paramsAsAnonymous", propAsAnonymous);
+            Guard.AgainstExceptSingleProperty("paramsAsAnonymous", propAsAnonymous);
 
             if (PropertyName == null) throw new InvalidOperationException();
 
-            PropertyValues.Add(name, value);
+            PropertyLayouts.Add(propAsAnonymous);
+
             return this;
         }
 
@@ -52,9 +53,9 @@ namespace Tagger
 
         internal Type Type { get; private set; }
 
-        internal object[] CtorParameters { get; private set; }
+        internal object CtorLayout { get; private set; }
 
-        internal IDictionary<string, object> PropertyValues { get; private set; }
+        internal List<object> PropertyLayouts { get; private set; }
 
         internal AttributeMeta ToAttributeMeta()
         {
@@ -63,8 +64,18 @@ namespace Tagger
             return new AttributeMeta(
                 PropertyName,
                 Type,
-                CtorParameters,
-                PropertyValues);
+                CtorLayout,
+                LayoutsToDictionary(PropertyLayouts));
+        }
+
+        static IDictionary<string, object> LayoutsToDictionary(IEnumerable<object> propLayouts)
+        {
+            var dictionary = new Dictionary<string, object>();
+            foreach (var dynamic in propLayouts) {
+                var prop = dynamic.GetType().GetProperties().Single();
+                dictionary.Add(prop.Name, prop.GetValue(dynamic));
+            }
+            return dictionary;
         }
     }
 }

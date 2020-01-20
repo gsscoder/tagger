@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 static class Guard
 {
@@ -14,9 +15,21 @@ static class Guard
             $"{argumentName} cannot be empty or contains only white spaces", argumentName);
     }
 
-    public static void AgainstNotInterface<T>()
+    public static void AgainstExceptInterface<T>()
     {
         if (!typeof(T).IsInterface) throw new ArgumentException(
             "T must be an interface type");
+    }
+
+    public static void AgainstExceptAnonymous(string argumentName, object value)
+    {
+        if (!value.GetType().IsAnonymous()) throw new ArgumentException(
+            $"{nameof(argumentName)} must be an anonymous type instance");
+    }
+
+    public static void AgainstExceptSingleProperty(string argumentName, object value)
+    {
+        if (value.GetType().GetProperties().Count() != 1) throw new ArgumentException(
+            $"{nameof(argumentName)} must have exactly a single property");
     }
 }

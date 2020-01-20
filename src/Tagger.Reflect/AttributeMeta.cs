@@ -6,12 +6,12 @@ struct AttributeMeta
     public AttributeMeta(
         string propertyName,
         Type attributeType,
-        object[] ctorParameters,
+        object ctorLayout,
         IDictionary<string, object> propertyValues)
     {
         PropertyName = propertyName;
         AttributeType = attributeType;
-        CtorParameters= ctorParameters;
+        CtorLayout = ctorLayout;
         PropertyValues = propertyValues;
     }
 
@@ -19,7 +19,7 @@ struct AttributeMeta
 
     public Type AttributeType { get; private set; }
 
-    public object[] CtorParameters { get; private set; }
+    public object CtorLayout { get; private set; }
 
     public IDictionary<string, object> PropertyValues { get; private set; }
 }

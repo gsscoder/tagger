@@ -33,15 +33,18 @@ var mirror = new Mirror(new { Foo = default(string) })
     .Implement<IMyInterface>()
     .Add(x => x.ForProperty(propertyName)
                .Define<MyAttribute>()
-               .CtorValues("ctor")
-               .PropertyValue("AttrProp", "value"));
+               .AttributeCtor(new { index = 0 })
+               // define an anonymous instance for each attribute
+               // property to set
+               .AttributeProperty(new { Dir = "/etc/app" })
+               .AttributeProperty(new { Config = "file.dat" });
 
 var instance = mirror.Unwrap<IMyInterface>();
 
 // instance layout:
 // class anonymous : IMyInterface {
 //     ...
-//     [MyAttribute("ctor", AttrProp = "value")]
+//     [MyAttribute(0, Dir = "/etc/app", Config = "file.dat")]
 //     public string Foo { get; set; } 
 //     ...
 // }

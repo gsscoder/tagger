@@ -34,7 +34,7 @@ namespace Tagger
 
         public Mirror Implement<T>()
         {
-            Guard.AgainstNotInterface<T>();
+            Guard.AgainstExceptInterface<T>();
 
             return new Mirror(
                 _metadata.WithInterfaces(
@@ -116,13 +116,22 @@ namespace Tagger
                 var attrInfos = _metadata.Attributes[prop.Name];
                 attrInfos.ForEach(info =>
                     {
-                        var ctorTypes = (from type in info.CtorParameters
-                                         select type.GetType()).ToArray();
+                        var ctorTypes = info.CtorLayout == null 
+                                        ? new Type[] {}
+                                        : (from p in info.CtorLayout.GetType().GetProperties()
+                                           select p.PropertyType).ToArray();
                         var ctorInfo = info.AttributeType.GetConstructor(ctorTypes);
+                        if (!ctorInfo.ValidateNames(info.CtorLayout)) {
+                            throw new ArgumentException("Anonymous type doesn't match constructor parameters names.");
+                        }
+                        var ctorValues = info.CtorLayout == null 
+                                         ? new object[] {}
+                                         : (from p in info.CtorLayout.GetType().GetProperties()
+                                          select p.GetValue(info.CtorLayout)).ToArray();
 
                         if (!info.PropertyValues.Any()) {
                             propBuilder.SetCustomAttribute(
-                                new CustomAttributeBuilder(ctorInfo, info.CtorParameters.ToArray()));
+                                new CustomAttributeBuilder(ctorInfo, ctorValues));
                         }
                         else {
                             var propWithValues =
@@ -132,7 +141,7 @@ namespace Tagger
                             propBuilder.SetCustomAttribute(
                                 new CustomAttributeBuilder(
                                     ctorInfo,
-                                    info.CtorParameters.ToArray(),
+                                    ctorValues,
                                     (from p in propWithValues select p.PropInfo).ToArray(),
                                     (from v in propWithValues select v.PropValue).ToArray()));
                         }
