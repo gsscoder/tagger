@@ -129,10 +129,10 @@ public class MirrorTests
     }
 
     [Theory]
-    [InlineData(new double[] { 0.99321, 9.66123, 1.23456 })]
-    [InlineData(new double[] { 9.66123, 0.99321, 1.23456 })]
-    [InlineData(new double[] { 1.23456, 0.99321, 9.66123 })]
-    public void Should_handle_attribute_with_array_property(double[] value)
+    [InlineData(new [] { 0.99321, 9.66123, 1.23456 })]
+    [InlineData(new [] { 9.66123, 0.99321, 1.23456 })]
+    [InlineData(new [] { 1.23456, 0.99321, 9.66123 })]
+    public void Should_handle_attribute_with_array_in_property(double[] value)
     {
         var expected = new BazAttribute() { Value = value };
 
@@ -143,6 +143,24 @@ public class MirrorTests
                            .AttributeProperty(new { Value = value }));
 
         sut.Object.GetType().SingleAttribute<BazAttribute>("Foo")
+            .Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData(new [] { 0.99321, 9.66123, 1.23456 })]
+    [InlineData(new [] { 9.66123, 0.99321, 1.23456 })]
+    [InlineData(new [] { 1.23456, 0.99321, 9.66123 })]
+    public void Should_handle_attribute_with_array_in_ctor(double[] value)
+    {
+        var expected = new BazAttribute(value);
+
+        var sut = new Mirror(
+            new { Bar = default(object) })
+                .Add(x => x.ForProperty("Bar")
+                           .Define<BazAttribute>()
+                           .AttributeCtor(new { value = value }));
+
+        sut.Object.GetType().SingleAttribute<BazAttribute>("Bar")
             .Should().Be(expected);
     }
 }
