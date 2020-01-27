@@ -6,9 +6,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{6FF55A
 		paket.dependencies = paket.dependencies
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Reflect", "src\Tagger.Reflect\Tagger.Reflect.csproj", "{AD34D276-F9FF-4C15-9DA3-56D15D5849AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Reflect", "Tagger.Reflect/Tagger.Reflect.csproj", "{AD34D276-F9FF-4C15-9DA3-56D15D5849AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Reflect.Tests", "tests\Tagger.Reflect.Tests\Tagger.Reflect.Tests.csproj", "{6100438C-F4D9-4F7E-B256-5F89F2452792}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagger.Reflect.Specs", "Tagger.Reflect.Specs/Tagger.Reflect.Specs.csproj", "{6100438C-F4D9-4F7E-B256-5F89F2452792}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

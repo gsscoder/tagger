@@ -5,7 +5,7 @@ using Xunit;
 using FluentAssertions;
 using Tagger;
 
-public class MirrorTests
+public class MirroSpecs
 {
     [Theory]
     [InlineData("foo bar baz")]
