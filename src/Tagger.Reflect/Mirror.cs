@@ -27,10 +27,7 @@ namespace Tagger
                 Enumerable.Empty<Type>());
         }
 
-        Mirror(Metadata metadata)
-        {
-            _metadata = metadata;
-        }
+        Mirror(Metadata metadata) => _metadata = metadata;
 
         public Mirror Implement<T>()
         {
@@ -70,11 +67,7 @@ namespace Tagger
                     _metadata.Properties.Concat(new[] { config.ToMetadata() })));
         }
 
-        public T Unwrap<T>()
-            where T : class
-        {
-            return (T)Object;
-        }
+        public T Unwrap<T>() where T : class => (T)Object;
 
         public object Object
         {
@@ -152,9 +145,6 @@ namespace Tagger
             return instance;
         }
 
-        static string GenerateTypeName()
-        {
-            return new Guid().ToString();
-        }
+        static string GenerateTypeName() => new Guid().ToString();
     }
 }
