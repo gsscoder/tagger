@@ -105,7 +105,7 @@ namespace Tagger
             var props = (from @interface in _metadata.Interfaces
                          select @interface.GetProperties(
                              from meta in _metadata.Properties
-                             select meta.Name)).SelectMany(p => p).Memoize();
+                             select meta.Name)).SelectMany(p => p).Materialize();
             _metadata = _metadata.WithProperties(_metadata.Properties.Concat(props));
 
             foreach(var prop in _metadata.Properties) {
