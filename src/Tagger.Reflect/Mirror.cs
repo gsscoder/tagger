@@ -9,9 +9,9 @@ namespace Tagger
 {
     public sealed class Mirror
     {
-        private Metadata _metadata = new Metadata();
-        private bool _built;
-        private object _object;
+        Metadata _metadata = new Metadata();
+        bool _built;
+        object _object;
         
         public Mirror() { }
 
@@ -27,7 +27,7 @@ namespace Tagger
                 Enumerable.Empty<Type>());
         }
 
-        private Mirror(Metadata metadata)
+        Mirror(Metadata metadata)
         {
             _metadata = metadata;
         }
