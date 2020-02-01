@@ -80,9 +80,8 @@ namespace Tagger
         {
             get
             {
-                if (_built) {
-                    return _object;
-                }
+                if (_built) return _object;
+
                 lock (this) {
                     var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
                     _object = BuildObject(typeName);
