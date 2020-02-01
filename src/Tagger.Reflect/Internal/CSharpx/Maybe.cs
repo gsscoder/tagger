@@ -225,6 +225,16 @@ namespace CSharpx
         }
         #endregion
 
+        /// <summary>This is a version of map which can throw out the value. If contains a <c>Just</c>
+        /// executes a mapping function over it, in case of <c>Nothing</c> returns <c>@default</c>.</summary>
+        public static T2 Map<T1, T2>(this Maybe<T1> maybe, Func<T1, T2> func, T2 @default = default(T2))
+        {
+            if (maybe == null) throw new ArgumentNullException(nameof(maybe));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            return maybe.MatchJust(out T1 value) ? func(value) : @default;
+        }
+
         #region LINQ Operators
         /// <summary>Map operation compatible with LINQ.</summary>
         public static Maybe<TResult> Select<TSource, TResult>(this Maybe<TSource> maybe,
@@ -316,25 +326,6 @@ namespace CSharpx
                 return value;
             }
             throw exceptionToThrow ?? new Exception("The value is empty.");
-        }
-
-        /// <summary>Extracts the element out of <c>Just</c> or <c>returns</c> a null if it is form of
-        /// <c>Nothing</c>.</summary>
-        public static T FromJustOrNull<T>(this Maybe<T> maybe) where T : class
-        {
-            if (maybe == null) throw new ArgumentNullException(nameof(maybe));
-
-            return maybe.MatchJust(out T value) ? value : null;
-        }
-
-        /// <summary>If contains a values executes a mapping function over it, otherwise returns
-        /// <c>@default</c>.</summary>
-        public static T2 MapValueOrDefault<T1, T2>(this Maybe<T1> maybe, Func<T1, T2> func, T2 @default)
-        {
-            if (maybe == null) throw new ArgumentNullException(nameof(maybe));
-            if (func == null) throw new ArgumentNullException(nameof(func));
-
-            return maybe.MatchJust(out T1 value) ? func(value) : @default;
         }
 
         #region
