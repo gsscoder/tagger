@@ -6,10 +6,7 @@ namespace Tagger
 {
     public sealed class AttributeBinder
     {
-        public AttributeBinder()
-        {
-            PropertyLayouts = new List<object>();
-        }
+        public AttributeBinder() => PropertyLayouts = new List<object>();
 
         public AttributeBinder ForProperty(string name)
         {
