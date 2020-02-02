@@ -1,3 +1,6 @@
+[![NuGet](https://img.shields.io/nuget/dt/tagger.reflect.svg)](https://nuget.org/packages/tagger.reflect)
+[![NuGet](https://img.shields.io/nuget/v/tagger.reflect.svg)](https://nuget.org/packages/tagger.reflect)
+
 # <img src="/assets/icon.png" height="30px" alt="CSharpx Logo"> Tagger.Reflect
 
 .NET library to mock object properties with attributes.
