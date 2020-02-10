@@ -2,7 +2,7 @@
 
 public class FooAttribute : Attribute
 {
-    private readonly string name;
+    readonly string name;
 
     public FooAttribute(string name)
     {
