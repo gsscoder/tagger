@@ -10,8 +10,7 @@ namespace Tagger
     public sealed class Mirror
     {
         Metadata _metadata = new Metadata();
-        bool _built;
-        object _object;
+        Maybe<object> _object = Maybe.Nothing<object>();
         
         public Mirror() { }
 
@@ -73,13 +72,12 @@ namespace Tagger
         {
             get
             {
-                if (_built) return _object;
-
                 lock (this) {
-                    var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
-                    _object = BuildObject(typeName);
-                    _built = true;
-                    return _object;
+                    if (_object.IsNothing()) {
+                        var typeName = _metadata.Template.Return(t => t.GetType().Name, GenerateTypeName());
+                        _object = Maybe.Just(BuildObject(typeName));
+                    }
+                    return _object.FromJust();
                 }
             }
         }
