@@ -1,5 +1,6 @@
 source https://www.nuget.org/api/v2
 
+nuget CSharpx 2.6.5-rc1
 nuget coverlet.collector 1.0.1
 nuget FluentAssertions 5.9.0
 nuget Microsoft.NET.Test.Sdk 16.2.0

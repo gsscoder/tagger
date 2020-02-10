@@ -12,7 +12,7 @@ I initially designed this library for writing tests for [Command Line Parser Lib
 ## Targets
 
 - .NET Standard 2.0
-- .NET Framework 4.5, 4.6.1
+- .NET Framework 4.6.1
 
 ## Install via NuGet
 
