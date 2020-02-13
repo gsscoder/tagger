@@ -2,17 +2,14 @@
 
 public class FooAttribute : Attribute
 {
-    readonly string name;
+    readonly string _name;
 
     public FooAttribute(string name)
     {
-        this.name = name;
+        _name = name;
     }
 
-    public string Name
-    {
-        get { return name; }
-    }
+    public string Name => _name;
 
     public int Value { get; set; }
 }
